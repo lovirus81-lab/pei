@@ -1,0 +1,448 @@
+[
+  {
+    "code": "GEN-EQP-001",
+    "category": "equipment",
+    "kind": "generate",
+    "scope": "PID",
+    "layer": "L2",
+    "priority": 10,
+    "is_overridable": true,
+    "name_ko": "펌프 배치 시 체크밸브 자동 추가",
+    "name_en": "Auto-add check valve on pump discharge",
+    "reference": "API 610, 설계 관행",
+    "condition_json": {
+      "trigger": "node_placed",
+      "where": {
+        "type": "equipment",
+        "subtype": [
+          "centrifugal_pump",
+          "reciprocating_pump",
+          "metering_pump"
+        ]
+      }
+    },
+    "action_json": {
+      "add_node": {
+        "type": "valve",
+        "subtype": "check_valve",
+        "position": "downstream",
+        "offset": {
+          "x": 120,
+          "y": 0
+        }
+      },
+      "add_edge": {
+        "from": "$trigger_node.discharge",
+        "to": "$new_node.inlet",
+        "type": "process"
+      }
+    }
+  },
+  {
+    "code": "GEN-EQP-002",
+    "category": "equipment",
+    "kind": "generate",
+    "scope": "PID",
+    "layer": "L2",
+    "priority": 10,
+    "is_overridable": true,
+    "name_ko": "펌프 배치 시 차단밸브 자동 추가",
+    "name_en": "Auto-add block valves on pump suction and discharge",
+    "reference": "API 610, 설계 관행",
+    "condition_json": {
+      "trigger": "node_placed",
+      "where": {
+        "type": "equipment",
+        "subtype": [
+          "centrifugal_pump",
+          "reciprocating_pump",
+          "metering_pump"
+        ]
+      }
+    },
+    "action_json": {
+      "add_nodes": [
+        {
+          "type": "valve",
+          "subtype": "gate_valve",
+          "position": "upstream",
+          "offset": {
+            "x": -100,
+            "y": 0
+          },
+          "label": "suction_block"
+        },
+        {
+          "type": "valve",
+          "subtype": "gate_valve",
+          "position": "downstream",
+          "offset": {
+            "x": 220,
+            "y": 0
+          },
+          "label": "discharge_block"
+        }
+      ],
+      "add_edges": [
+        {
+          "from": "$new_node[suction_block].outlet",
+          "to": "$trigger_node.suction",
+          "type": "process"
+        },
+        {
+          "from": "$trigger_node.discharge",
+          "to": "$new_node[discharge_block].inlet",
+          "type": "process"
+        }
+      ]
+    }
+  },
+  {
+    "code": "GEN-EQP-003",
+    "category": "safety",
+    "kind": "generate",
+    "scope": "PID",
+    "layer": "L2",
+    "priority": 5,
+    "is_overridable": false,
+    "name_ko": "압력용기 배치 시 PSV 자동 추가",
+    "name_en": "Auto-add PSV and CSO block valve on pressure vessel",
+    "reference": "ASME VIII",
+    "condition_json": {
+      "trigger": "node_placed",
+      "where": {
+        "type": "equipment",
+        "subtype": [
+          "vessel",
+          "reactor",
+          "column"
+        ]
+      }
+    },
+    "action_json": {
+      "add_nodes": [
+        {
+          "type": "valve",
+          "subtype": "gate_valve",
+          "position": "top",
+          "offset": {
+            "x": 60,
+            "y": -80
+          },
+          "properties": {
+            "cso": true
+          },
+          "label": "psv_inlet_block"
+        },
+        {
+          "type": "valve",
+          "subtype": "safety_valve",
+          "position": "top",
+          "offset": {
+            "x": 60,
+            "y": -160
+          },
+          "label": "psv"
+        }
+      ],
+      "add_edges": [
+        {
+          "from": "$trigger_node.vent",
+          "to": "$new_node[psv_inlet_block].inlet",
+          "type": "process"
+        },
+        {
+          "from": "$new_node[psv_inlet_block].outlet",
+          "to": "$new_node[psv].inlet",
+          "type": "process"
+        }
+      ]
+    }
+  },
+  {
+    "code": "GEN-EQP-004",
+    "category": "equipment",
+    "kind": "generate",
+    "scope": "PID",
+    "layer": "L2",
+    "priority": 10,
+    "is_overridable": true,
+    "name_ko": "용기 배치 시 벤트/드레인 자동 추가",
+    "name_en": "Auto-add vent and drain on vessel placement",
+    "reference": "PIP PIC001",
+    "condition_json": {
+      "trigger": "node_placed",
+      "where": {
+        "type": "equipment",
+        "subtype": [
+          "vessel",
+          "tank",
+          "reactor",
+          "column"
+        ]
+      }
+    },
+    "action_json": {
+      "add_nodes": [
+        {
+          "type": "valve",
+          "subtype": "gate_valve",
+          "position": "top",
+          "offset": {
+            "x": -60,
+            "y": -80
+          },
+          "properties": {
+            "valve_function": "vent"
+          },
+          "label": "vent_valve"
+        },
+        {
+          "type": "valve",
+          "subtype": "gate_valve",
+          "position": "bottom",
+          "offset": {
+            "x": 0,
+            "y": 80
+          },
+          "properties": {
+            "valve_function": "drain"
+          },
+          "label": "drain_valve"
+        }
+      ],
+      "add_edges": [
+        {
+          "from": "$trigger_node.vent_nozzle",
+          "to": "$new_node[vent_valve].inlet",
+          "type": "process"
+        },
+        {
+          "from": "$trigger_node.drain_nozzle",
+          "to": "$new_node[drain_valve].inlet",
+          "type": "process"
+        }
+      ]
+    }
+  },
+  {
+    "code": "GEN-EQP-005",
+    "category": "valve",
+    "kind": "generate",
+    "scope": "PID",
+    "layer": "L2",
+    "priority": 10,
+    "is_overridable": true,
+    "name_ko": "제어밸브 배치 시 차단밸브+바이패스",
+    "name_en": "Auto-add block valves and bypass on control valve placement",
+    "reference": "PIP PIC001",
+    "condition_json": {
+      "trigger": "node_placed",
+      "where": {
+        "type": "valve",
+        "subtype": "control_valve"
+      }
+    },
+    "action_json": {
+      "add_nodes": [
+        {
+          "type": "valve",
+          "subtype": "gate_valve",
+          "position": "upstream",
+          "offset": {
+            "x": -80,
+            "y": 0
+          },
+          "label": "upstream_block"
+        },
+        {
+          "type": "valve",
+          "subtype": "gate_valve",
+          "position": "downstream",
+          "offset": {
+            "x": 80,
+            "y": 0
+          },
+          "label": "downstream_block"
+        },
+        {
+          "type": "valve",
+          "subtype": "globe_valve",
+          "position": "bypass",
+          "offset": {
+            "x": 0,
+            "y": -80
+          },
+          "label": "bypass_valve"
+        }
+      ],
+      "add_edges": [
+        {
+          "from": "$new_node[upstream_block].outlet",
+          "to": "$trigger_node.inlet",
+          "type": "process"
+        },
+        {
+          "from": "$trigger_node.outlet",
+          "to": "$new_node[downstream_block].inlet",
+          "type": "process"
+        },
+        {
+          "from": "$new_node[upstream_block].bypass_out",
+          "to": "$new_node[bypass_valve].inlet",
+          "type": "process"
+        },
+        {
+          "from": "$new_node[bypass_valve].outlet",
+          "to": "$new_node[downstream_block].bypass_in",
+          "type": "process"
+        }
+      ]
+    }
+  },
+  {
+    "code": "GEN-TAG-001",
+    "category": "tag",
+    "kind": "generate",
+    "scope": "both",
+    "layer": "L3",
+    "priority": 20,
+    "is_overridable": true,
+    "name_ko": "장비 태그 자동 넘버링",
+    "name_en": "Auto-generate equipment tag number",
+    "reference": "PIP PIC001",
+    "condition_json": {
+      "trigger": "node_placed",
+      "where": {
+        "type": "equipment",
+        "tag": null
+      }
+    },
+    "action_json": {
+      "generate_tag": {
+        "format": "{class_letter}-{area_number}{seq_number}",
+        "class_letter": "$pip_class_letter_from_subtype",
+        "area_number": "$diagram.metadata.area",
+        "seq_number": "$next_seq_for_class_in_diagram"
+      }
+    }
+  },
+  {
+    "code": "GEN-TAG-002",
+    "category": "tag",
+    "kind": "generate",
+    "scope": "PID",
+    "layer": "L3",
+    "priority": 20,
+    "is_overridable": true,
+    "name_ko": "라인넘버 자동 생성",
+    "name_en": "Auto-generate line number on edge creation",
+    "reference": "PIP PIC001",
+    "condition_json": {
+      "trigger": "edge_created",
+      "where": {
+        "type": "process",
+        "line_number": null
+      }
+    },
+    "action_json": {
+      "generate_line_number": {
+        "format": "{size}\"-{fluid_code}-{seq_number}-{pipe_class}",
+        "size": "2",
+        "fluid_code": "$edge.properties.fluid",
+        "seq_number": "$next_line_seq_in_diagram",
+        "pipe_class": "$edge.properties.spec"
+      }
+    }
+  },
+  {
+    "code": "GEN-TAG-003",
+    "category": "tag",
+    "kind": "generate",
+    "scope": "both",
+    "layer": "L3",
+    "priority": 20,
+    "is_overridable": true,
+    "name_ko": "계기 태그 자동 넘버링",
+    "name_en": "Auto-generate instrument tag number",
+    "reference": "ISA-5.1",
+    "condition_json": {
+      "trigger": "node_placed",
+      "where": {
+        "type": "instrument",
+        "tag": null
+      }
+    },
+    "action_json": {
+      "generate_tag": {
+        "format": "{isa_code}-{loop_number}",
+        "isa_code": "$isa_letters_from_subtype",
+        "loop_number": "$next_loop_number_for_measured_variable"
+      }
+    }
+  },
+  {
+    "code": "GEN-SYM-001",
+    "category": "symbol",
+    "kind": "generate",
+    "scope": "both",
+    "layer": "L3",
+    "priority": 50,
+    "is_overridable": true,
+    "name_ko": "심볼 자동 선택",
+    "name_en": "Auto-select SVG symbol based on node subtype",
+    "reference": "ISA-5.1, ISO 10628",
+    "condition_json": {
+      "trigger": "node_placed",
+      "where": {
+        "symbol": null
+      }
+    },
+    "action_json": {
+      "set_symbol": {
+        "source": "SYMBOL_MAP",
+        "key": "$node.subtype"
+      }
+    }
+  },
+  {
+    "code": "GEN-LIN-001",
+    "category": "symbol",
+    "kind": "generate",
+    "scope": "both",
+    "layer": "L3",
+    "priority": 50,
+    "is_overridable": true,
+    "name_ko": "선종 자동 스타일",
+    "name_en": "Auto-apply line style based on edge type",
+    "reference": "ISA-5.1, PIP PIC001",
+    "condition_json": {
+      "trigger": "edge_created"
+    },
+    "action_json": {
+      "set_style": {
+        "process": {
+          "stroke": "#000",
+          "strokeWidth": 2,
+          "strokeDasharray": null
+        },
+        "utility": {
+          "stroke": "#000",
+          "strokeWidth": 1.5,
+          "strokeDasharray": "6 3"
+        },
+        "signal_electrical": {
+          "stroke": "#000",
+          "strokeWidth": 1,
+          "strokeDasharray": "2 2"
+        },
+        "signal_pneumatic": {
+          "stroke": "#000",
+          "strokeWidth": 1,
+          "strokeDasharray": "2 2",
+          "marker": "X"
+        }
+      }
+    }
+  }
+]

@@ -1,0 +1,176 @@
+[
+    {
+        "code": "LKP-ISA-001",
+        "category": "instrument",
+        "kind": "lookup",
+        "scope": "both",
+        "layer": "L1",
+        "name_ko": "분석 (Analysis)",
+        "name_en": "Analysis",
+        "condition_json": {
+            "letter": "A",
+            "position": "first"
+        },
+        "action_json": {
+            "measured_variable": "Analysis",
+            "measured_variable_ko": "분석"
+        }
+    },
+    {
+        "code": "LKP-ISA-002",
+        "category": "instrument",
+        "kind": "lookup",
+        "scope": "both",
+        "layer": "L1",
+        "name_ko": "연소 (Burner/Combustion)",
+        "name_en": "Burner/Combustion",
+        "condition_json": {
+            "letter": "B",
+            "position": "first"
+        },
+        "action_json": {
+            "measured_variable": "Burner",
+            "measured_variable_ko": "연소"
+        }
+    },
+    {
+        "code": "LKP-ISA-006",
+        "category": "instrument",
+        "kind": "lookup",
+        "scope": "both",
+        "layer": "L1",
+        "name_ko": "유량 (Flow Rate)",
+        "name_en": "Flow Rate",
+        "condition_json": {
+            "letter": "F",
+            "position": "first"
+        },
+        "action_json": {
+            "measured_variable": "Flow Rate",
+            "measured_variable_ko": "유량"
+        }
+    },
+    {
+        "code": "LKP-ISA-012",
+        "category": "instrument",
+        "kind": "lookup",
+        "scope": "both",
+        "layer": "L1",
+        "name_ko": "레벨 (Level)",
+        "name_en": "Level",
+        "condition_json": {
+            "letter": "L",
+            "position": "first"
+        },
+        "action_json": {
+            "measured_variable": "Level",
+            "measured_variable_ko": "레벨"
+        }
+    },
+    {
+        "code": "LKP-ISA-016",
+        "category": "instrument",
+        "kind": "lookup",
+        "scope": "both",
+        "layer": "L1",
+        "name_ko": "압력 (Pressure)",
+        "name_en": "Pressure",
+        "condition_json": {
+            "letter": "P",
+            "position": "first"
+        },
+        "action_json": {
+            "measured_variable": "Pressure",
+            "measured_variable_ko": "압력"
+        }
+    },
+    {
+        "code": "LKP-ISA-020",
+        "category": "instrument",
+        "kind": "lookup",
+        "scope": "both",
+        "layer": "L1",
+        "name_ko": "온도 (Temperature)",
+        "name_en": "Temperature",
+        "condition_json": {
+            "letter": "T",
+            "position": "first"
+        },
+        "action_json": {
+            "measured_variable": "Temperature",
+            "measured_variable_ko": "온도"
+        }
+    },
+    {
+        "code": "LKP-PIP-001",
+        "category": "equipment",
+        "kind": "lookup",
+        "scope": "both",
+        "layer": "L1",
+        "name_ko": "열교환 장비",
+        "name_en": "Heat Transfer Equipment",
+        "condition_json": {
+            "class_letter": "A"
+        },
+        "action_json": {
+            "equipment_class": "Heat Transfer Equipment"
+        }
+    },
+    {
+        "code": "LKP-PIP-008",
+        "category": "equipment",
+        "kind": "lookup",
+        "scope": "both",
+        "layer": "L1",
+        "name_ko": "액체 처리",
+        "name_en": "Liquid Handling",
+        "condition_json": {
+            "class_letter": "J"
+        },
+        "action_json": {
+            "equipment_class": "Liquid Handling"
+        }
+    },
+    {
+        "code": "VAL-EQP-001",
+        "category": "equipment",
+        "kind": "validate",
+        "scope": "PID",
+        "layer": "L2",
+        "severity": "error",
+        "name_ko": "펌프 토출측 체크밸브 필수",
+        "message_template": "{tag}의 토출측에 체크밸브가 없습니다.",
+        "condition_json": {
+            "match": "node",
+            "where": {
+                "type": "equipment",
+                "subtype": "pump"
+            },
+            "check": {
+                "downstream_edge": {
+                    "has_node": {
+                        "type": "valve",
+                        "subtype": "check_valve"
+                    },
+                    "max_distance": 2
+                }
+            }
+        }
+    },
+    {
+        "code": "VAL-PID-001",
+        "category": "piping",
+        "kind": "validate",
+        "scope": "PID",
+        "layer": "L2",
+        "severity": "error",
+        "name_ko": "라인넘버 형식 준수",
+        "message_template": "라인넘버 {line_number} 형식이 올바르지 않습니다.",
+        "condition_json": {
+            "match": "edge",
+            "check": {
+                "line_number_format": "^\\d+\"-[A-Z]{2,4}-\\d{3,4}-[A-Z0-9]+$"
+            }
+        }
+    }
+]

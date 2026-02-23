@@ -1,0 +1,1379 @@
+[
+  {
+    "code": "VAL-EQP-001",
+    "category": "equipment",
+    "kind": "validate",
+    "scope": "PID",
+    "severity": "error",
+    "layer": "L2",
+    "priority": 10,
+    "is_overridable": false,
+    "name_ko": "펌프 토출측 체크밸브 필수",
+    "name_en": "Check valve required on pump discharge",
+    "reference": "API 610, 설계 관행",
+    "message_template": "{tag}의 토출측에 체크밸브가 없습니다.",
+    "condition_json": {
+      "match": "node",
+      "where": {
+        "type": "equipment",
+        "subtype": [
+          "centrifugal_pump",
+          "reciprocating_pump",
+          "metering_pump"
+        ]
+      },
+      "check": {
+        "downstream_node": {
+          "type": "valve",
+          "subtype": "check_valve",
+          "max_distance": 2
+        }
+      }
+    }
+  },
+  {
+    "code": "VAL-EQP-002",
+    "category": "equipment",
+    "kind": "validate",
+    "scope": "PID",
+    "severity": "error",
+    "layer": "L2",
+    "priority": 10,
+    "is_overridable": false,
+    "name_ko": "펌프 흡입/토출측 차단밸브 필수",
+    "name_en": "Block valves required on pump suction and discharge",
+    "reference": "API 610, 설계 관행",
+    "message_template": "{tag}의 흡입측 또는 토출측에 차단밸브가 없습니다.",
+    "condition_json": {
+      "match": "node",
+      "where": {
+        "type": "equipment",
+        "subtype": [
+          "centrifugal_pump",
+          "reciprocating_pump",
+          "metering_pump"
+        ]
+      },
+      "check": {
+        "upstream_node": {
+          "type": "valve",
+          "subtype": [
+            "gate_valve",
+            "ball_valve",
+            "butterfly_valve"
+          ],
+          "max_distance": 2
+        },
+        "downstream_node": {
+          "type": "valve",
+          "subtype": [
+            "gate_valve",
+            "ball_valve",
+            "butterfly_valve"
+          ],
+          "max_distance": 3
+        }
+      }
+    }
+  },
+  {
+    "code": "VAL-EQP-003",
+    "category": "safety",
+    "kind": "validate",
+    "scope": "PID",
+    "severity": "error",
+    "layer": "L2",
+    "priority": 5,
+    "is_overridable": false,
+    "name_ko": "압력용기에 PSV 필수",
+    "name_en": "PSV required on pressure vessels",
+    "reference": "ASME VIII, PIP PIC001",
+    "message_template": "{tag}에 PSV(안전밸브)가 연결되어 있지 않습니다.",
+    "condition_json": {
+      "match": "node",
+      "where": {
+        "type": "equipment",
+        "subtype": [
+          "vessel",
+          "reactor",
+          "column"
+        ]
+      },
+      "check": {
+        "connected_node": {
+          "type": "valve",
+          "subtype": "safety_valve"
+        }
+      }
+    }
+  },
+  {
+    "code": "VAL-EQP-004",
+    "category": "safety",
+    "kind": "validate",
+    "scope": "PID",
+    "severity": "warning",
+    "layer": "L2",
+    "priority": 20,
+    "is_overridable": true,
+    "name_ko": "PSV 입구측 차단밸브 CSO 표기",
+    "name_en": "Block valve upstream of PSV must be CSO",
+    "reference": "API 520/521",
+    "message_template": "PSV {tag} 상류 차단밸브에 CSO 표기가 없습니다.",
+    "condition_json": {
+      "match": "node",
+      "where": {
+        "type": "valve",
+        "subtype": "safety_valve"
+      },
+      "check": {
+        "upstream_node": {
+          "type": "valve",
+          "properties": {
+            "cso": true
+          },
+          "max_distance": 1
+        }
+      }
+    }
+  },
+  {
+    "code": "VAL-EQP-005",
+    "category": "equipment",
+    "kind": "validate",
+    "scope": "PID",
+    "severity": "warning",
+    "layer": "L2",
+    "priority": 30,
+    "is_overridable": true,
+    "name_ko": "원심펌프 최소유량 바이패스 라인",
+    "name_en": "Minimum flow bypass required for centrifugal pump",
+    "reference": "API 610",
+    "message_template": "{tag}에 최소유량 바이패스 라인이 없습니다.",
+    "condition_json": {
+      "match": "node",
+      "where": {
+        "type": "equipment",
+        "subtype": "centrifugal_pump"
+      },
+      "check": {
+        "has_bypass": true
+      }
+    }
+  },
+  {
+    "code": "VAL-EQP-006",
+    "category": "equipment",
+    "kind": "validate",
+    "scope": "PID",
+    "severity": "error",
+    "layer": "L2",
+    "priority": 10,
+    "is_overridable": false,
+    "name_ko": "열교환기 벤트/드레인 밸브 필수",
+    "name_en": "Vent and drain valves required on heat exchangers",
+    "reference": "TEMA, PIP PIC001",
+    "message_template": "{tag}에 벤트 또는 드레인 밸브가 없습니다.",
+    "condition_json": {
+      "match": "node",
+      "where": {
+        "type": "equipment",
+        "subtype": "heat_exchanger"
+      },
+      "check": {
+        "connected_node_with_label": [
+          {
+            "label": "vent",
+            "type": "valve"
+          },
+          {
+            "label": "drain",
+            "type": "valve"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "code": "VAL-EQP-007",
+    "category": "equipment",
+    "kind": "validate",
+    "scope": "PID",
+    "severity": "error",
+    "layer": "L2",
+    "priority": 10,
+    "is_overridable": false,
+    "name_ko": "용기 하부 드레인 밸브 필수",
+    "name_en": "Drain valve required at vessel bottom",
+    "reference": "PIP PIC001",
+    "message_template": "{tag} 하부에 드레인 밸브가 없습니다.",
+    "condition_json": {
+      "match": "node",
+      "where": {
+        "type": "equipment",
+        "subtype": [
+          "vessel",
+          "tank",
+          "reactor",
+          "column"
+        ]
+      },
+      "check": {
+        "nozzle_with_label": {
+          "label": "drain",
+          "has_valve": true
+        }
+      }
+    }
+  },
+  {
+    "code": "VAL-EQP-008",
+    "category": "equipment",
+    "kind": "validate",
+    "scope": "PID",
+    "severity": "error",
+    "layer": "L2",
+    "priority": 10,
+    "is_overridable": false,
+    "name_ko": "용기 상부 벤트 밸브 필수",
+    "name_en": "Vent valve required at vessel top",
+    "reference": "PIP PIC001",
+    "message_template": "{tag} 상부에 벤트 밸브가 없습니다.",
+    "condition_json": {
+      "match": "node",
+      "where": {
+        "type": "equipment",
+        "subtype": [
+          "vessel",
+          "tank",
+          "reactor",
+          "column"
+        ]
+      },
+      "check": {
+        "nozzle_with_label": {
+          "label": "vent",
+          "has_valve": true
+        }
+      }
+    }
+  },
+  {
+    "code": "VAL-EQP-009",
+    "category": "valve",
+    "kind": "validate",
+    "scope": "PID",
+    "severity": "error",
+    "layer": "L2",
+    "priority": 10,
+    "is_overridable": false,
+    "name_ko": "제어밸브 전후 차단밸브 필수",
+    "name_en": "Block valves required on both sides of control valve",
+    "reference": "PIP PIC001",
+    "message_template": "{tag} 전후에 차단밸브가 없습니다.",
+    "condition_json": {
+      "match": "node",
+      "where": {
+        "type": "valve",
+        "subtype": "control_valve"
+      },
+      "check": {
+        "upstream_node": {
+          "type": "valve",
+          "subtype": [
+            "gate_valve",
+            "ball_valve"
+          ],
+          "max_distance": 1
+        },
+        "downstream_node": {
+          "type": "valve",
+          "subtype": [
+            "gate_valve",
+            "ball_valve"
+          ],
+          "max_distance": 1
+        }
+      }
+    }
+  },
+  {
+    "code": "VAL-EQP-010",
+    "category": "valve",
+    "kind": "validate",
+    "scope": "PID",
+    "severity": "warning",
+    "layer": "L2",
+    "priority": 30,
+    "is_overridable": true,
+    "name_ko": "제어밸브 바이패스 라인 필수",
+    "name_en": "Bypass line required around control valve",
+    "reference": "PIP PIC001",
+    "message_template": "{tag}에 바이패스 라인이 없습니다.",
+    "condition_json": {
+      "match": "node",
+      "where": {
+        "type": "valve",
+        "subtype": "control_valve"
+      },
+      "check": {
+        "has_bypass": true
+      }
+    }
+  },
+  {
+    "code": "VAL-EQP-011",
+    "category": "valve",
+    "kind": "validate",
+    "scope": "PID",
+    "severity": "warning",
+    "layer": "L2",
+    "priority": 30,
+    "is_overridable": true,
+    "name_ko": "스트레이너/필터 전후 차단밸브",
+    "name_en": "Block valves required on both sides of strainer",
+    "reference": "설계 관행",
+    "message_template": "{tag} 전후에 차단밸브가 없습니다.",
+    "condition_json": {
+      "match": "node",
+      "where": {
+        "type": "equipment",
+        "subtype": "filter"
+      },
+      "check": {
+        "upstream_node": {
+          "type": "valve",
+          "max_distance": 1
+        },
+        "downstream_node": {
+          "type": "valve",
+          "max_distance": 1
+        }
+      }
+    }
+  },
+  {
+    "code": "VAL-EQP-012",
+    "category": "instrument",
+    "kind": "validate",
+    "scope": "PID",
+    "severity": "info",
+    "layer": "L3",
+    "priority": 50,
+    "is_overridable": true,
+    "name_ko": "플로우 오리피스 전후 직관부",
+    "name_en": "Straight pipe required before and after flow orifice",
+    "reference": "ISO 5167",
+    "message_template": "{tag} 전후에 충분한 직관부가 없습니다.",
+    "condition_json": {
+      "match": "node",
+      "where": {
+        "type": "instrument",
+        "subtype": "element",
+        "properties": {
+          "instrument_type": "orifice"
+        }
+      },
+      "check": {
+        "straight_pipe_upstream": true,
+        "straight_pipe_downstream": true
+      }
+    }
+  },
+  {
+    "code": "VAL-EQP-013",
+    "category": "valve",
+    "kind": "validate",
+    "scope": "PID",
+    "severity": "warning",
+    "layer": "L2",
+    "priority": 30,
+    "is_overridable": true,
+    "name_ko": "스팀트랩 후단 체크밸브",
+    "name_en": "Check valve required downstream of steam trap",
+    "reference": "설계 관행",
+    "message_template": "{tag} 후단에 체크밸브가 없습니다.",
+    "condition_json": {
+      "match": "node",
+      "where": {
+        "type": "equipment",
+        "properties": {
+          "equipment_type": "steam_trap"
+        }
+      },
+      "check": {
+        "downstream_node": {
+          "type": "valve",
+          "subtype": "check_valve",
+          "max_distance": 1
+        }
+      }
+    }
+  },
+  {
+    "code": "VAL-EQP-014",
+    "category": "equipment",
+    "kind": "validate",
+    "scope": "PID",
+    "severity": "error",
+    "layer": "L2",
+    "priority": 10,
+    "is_overridable": false,
+    "name_ko": "탱크 오버플로우 라인 필수",
+    "name_en": "Overflow line required for atmospheric tank",
+    "reference": "API 650, 설계 관행",
+    "message_template": "{tag}에 오버플로우 라인이 없습니다.",
+    "condition_json": {
+      "match": "node",
+      "where": {
+        "type": "equipment",
+        "subtype": "tank",
+        "properties": {
+          "tank_type": "atmospheric"
+        }
+      },
+      "check": {
+        "nozzle_with_label": {
+          "label": "overflow",
+          "has_connection": true
+        }
+      }
+    }
+  },
+  {
+    "code": "VAL-EQP-015",
+    "category": "equipment",
+    "kind": "validate",
+    "scope": "PID",
+    "severity": "warning",
+    "layer": "L2",
+    "priority": 40,
+    "is_overridable": true,
+    "name_ko": "회전기기 윤활 시스템 표시",
+    "name_en": "Lubrication system indication required for rotating equipment",
+    "reference": "API 610/617",
+    "message_template": "{tag}에 윤활 시스템 표시가 없습니다.",
+    "condition_json": {
+      "match": "node",
+      "where": {
+        "type": "equipment",
+        "subtype": [
+          "centrifugal_pump",
+          "compressor",
+          "blower"
+        ]
+      },
+      "check": {
+        "has_utility_connection": {
+          "fluid": "lube_oil"
+        }
+      }
+    }
+  },
+  {
+    "code": "VAL-INS-001",
+    "category": "instrument",
+    "kind": "validate",
+    "scope": "PID",
+    "severity": "error",
+    "layer": "L1",
+    "priority": 5,
+    "is_overridable": false,
+    "name_ko": "제어루프 최소 구성: 센서+컨트롤러+최종요소",
+    "name_en": "Control loop must have sensor, controller, and final element",
+    "reference": "ISA-5.1",
+    "message_template": "루프 {loop_number}에 {missing_element}이 없습니다.",
+    "condition_json": {
+      "match": "loop",
+      "check": {
+        "has_element": {
+          "subtype": [
+            "transmitter",
+            "element"
+          ]
+        },
+        "has_controller": {
+          "subtype": "indicator_controller"
+        },
+        "has_final_element": {
+          "subtype": "control_valve"
+        }
+      }
+    }
+  },
+  {
+    "code": "VAL-INS-002",
+    "category": "instrument",
+    "kind": "validate",
+    "scope": "both",
+    "severity": "error",
+    "layer": "L1",
+    "priority": 5,
+    "is_overridable": false,
+    "name_ko": "계기 태그 첫 글자는 ISA 측정변수",
+    "name_en": "First letter of instrument tag must be ISA measured variable",
+    "reference": "ISA-5.1 Table 4.1",
+    "message_template": "{tag}의 첫 글자 '{first_letter}'는 ISA 측정변수 코드가 아닙니다.",
+    "condition_json": {
+      "match": "node",
+      "where": {
+        "type": "instrument"
+      },
+      "check": {
+        "tag_first_letter_in": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G",
+          "H",
+          "J",
+          "K",
+          "L",
+          "M",
+          "N",
+          "O",
+          "P",
+          "Q",
+          "R",
+          "S",
+          "T",
+          "U",
+          "V",
+          "W",
+          "X",
+          "Y",
+          "Z"
+        ]
+      }
+    }
+  },
+  {
+    "code": "VAL-INS-003",
+    "category": "tag",
+    "kind": "validate",
+    "scope": "both",
+    "severity": "error",
+    "layer": "L1",
+    "priority": 5,
+    "is_overridable": false,
+    "name_ko": "계기 태그 형식 준수",
+    "name_en": "Instrument tag format compliance",
+    "reference": "ISA-5.1",
+    "message_template": "{tag}의 형식이 ISA 규격에 맞지 않습니다.",
+    "condition_json": {
+      "match": "node",
+      "where": {
+        "type": "instrument"
+      },
+      "check": {
+        "tag_matches_pattern": "^[A-Z]{2,4}-\\d{3,4}[A-Z]?$"
+      }
+    }
+  },
+  {
+    "code": "VAL-INS-004",
+    "category": "safety",
+    "kind": "validate",
+    "scope": "PID",
+    "severity": "error",
+    "layer": "L1",
+    "priority": 5,
+    "is_overridable": false,
+    "name_ko": "안전계장 루프(SIF)에 SIL 등급 표기",
+    "name_en": "SIL rating required for Safety Instrumented Function",
+    "reference": "IEC 61511",
+    "message_template": "SIF 루프 {loop_number}에 SIL 등급이 표기되지 않았습니다.",
+    "condition_json": {
+      "match": "loop",
+      "where": {
+        "loop_type": "SIF"
+      },
+      "check": {
+        "has_property": {
+          "sil_rating": true
+        }
+      }
+    }
+  },
+  {
+    "code": "VAL-INS-005",
+    "category": "instrument",
+    "kind": "validate",
+    "scope": "PID",
+    "severity": "warning",
+    "layer": "L2",
+    "priority": 30,
+    "is_overridable": true,
+    "name_ko": "알람 설정값 범위 명시",
+    "name_en": "Alarm setpoint range must be specified",
+    "reference": "ISA-18.2",
+    "message_template": "{tag}에 알람 설정값이 명시되지 않았습니다.",
+    "condition_json": {
+      "match": "node",
+      "where": {
+        "type": "instrument",
+        "subtype": [
+          "alarm_high",
+          "alarm_low"
+        ]
+      },
+      "check": {
+        "has_property": {
+          "setpoint": true
+        }
+      }
+    }
+  },
+  {
+    "code": "VAL-INS-006",
+    "category": "instrument",
+    "kind": "validate",
+    "scope": "PID",
+    "severity": "warning",
+    "layer": "L2",
+    "priority": 30,
+    "is_overridable": true,
+    "name_ko": "전송기(T) 출력 신호 타입 표기",
+    "name_en": "Transmitter output signal type must be specified",
+    "reference": "ISA-5.1",
+    "message_template": "{tag}의 출력 신호 타입이 명시되지 않았습니다.",
+    "condition_json": {
+      "match": "node",
+      "where": {
+        "type": "instrument",
+        "subtype": "transmitter"
+      },
+      "check": {
+        "has_property": {
+          "signal_type": true
+        }
+      }
+    }
+  },
+  {
+    "code": "VAL-INS-007",
+    "category": "instrument",
+    "kind": "validate",
+    "scope": "PID",
+    "severity": "warning",
+    "layer": "L2",
+    "priority": 30,
+    "is_overridable": true,
+    "name_ko": "계기 위치 표기 (현장/판넬/DCS)",
+    "name_en": "Instrument location must be specified",
+    "reference": "ISA-5.1",
+    "message_template": "{tag}의 설치 위치(현장/판넬/DCS)가 명시되지 않았습니다.",
+    "condition_json": {
+      "match": "node",
+      "where": {
+        "type": "instrument"
+      },
+      "check": {
+        "has_property": {
+          "location": true
+        }
+      }
+    }
+  },
+  {
+    "code": "VAL-INS-008",
+    "category": "instrument",
+    "kind": "validate",
+    "scope": "PID",
+    "severity": "error",
+    "layer": "L1",
+    "priority": 5,
+    "is_overridable": false,
+    "name_ko": "동일 루프 내 태그 번호 통일",
+    "name_en": "Instruments in same loop must share the same loop number",
+    "reference": "ISA-5.1",
+    "message_template": "루프 {loop_number}의 계기 태그 번호가 일치하지 않습니다.",
+    "condition_json": {
+      "match": "loop",
+      "check": {
+        "all_instruments_same_loop_number": true
+      }
+    }
+  },
+  {
+    "code": "VAL-INS-009",
+    "category": "instrument",
+    "kind": "validate",
+    "scope": "PFD",
+    "severity": "warning",
+    "layer": "L1",
+    "priority": 20,
+    "is_overridable": true,
+    "name_ko": "PFD에서 주요 제어루프만 표시",
+    "name_en": "Only major control loops should appear in PFD",
+    "reference": "ISO 10628-1",
+    "message_template": "PFD에 세부 계기 {tag}가 표시되어 있습니다.",
+    "condition_json": {
+      "match": "node",
+      "where": {
+        "type": "instrument",
+        "properties": {
+          "importance": "minor"
+        }
+      },
+      "check": {
+        "diagram_type_not": "PFD"
+      }
+    }
+  },
+  {
+    "code": "VAL-INS-010",
+    "category": "instrument",
+    "kind": "validate",
+    "scope": "PID",
+    "severity": "warning",
+    "layer": "L2",
+    "priority": 30,
+    "is_overridable": true,
+    "name_ko": "인터락(shutdown) 기능은 별도 표기",
+    "name_en": "Interlock/shutdown function must use distinct symbol",
+    "reference": "IEC 61511",
+    "message_template": "{tag}의 인터락 기능이 별도 심볼로 표기되지 않았습니다.",
+    "condition_json": {
+      "match": "node",
+      "where": {
+        "type": "instrument",
+        "properties": {
+          "has_interlock": true
+        }
+      },
+      "check": {
+        "has_property": {
+          "interlock_symbol": true
+        }
+      }
+    }
+  },
+  {
+    "code": "VAL-PIP-001",
+    "category": "piping",
+    "kind": "validate",
+    "scope": "PID",
+    "severity": "error",
+    "layer": "L1",
+    "priority": 5,
+    "is_overridable": false,
+    "name_ko": "라인넘버 형식 준수",
+    "name_en": "Line number format compliance",
+    "reference": "PIP PIC001",
+    "message_template": "라인 {line_number}의 형식이 규격에 맞지 않습니다.",
+    "condition_json": {
+      "match": "edge",
+      "where": {
+        "line_number": {
+          "not_null": true
+        }
+      },
+      "check": {
+        "line_number_matches_pattern": "^\\d+\"-[A-Z]{1,4}-\\d{3,4}-[A-Z0-9]+$"
+      }
+    }
+  },
+  {
+    "code": "VAL-PIP-002",
+    "category": "piping",
+    "kind": "validate",
+    "scope": "PID",
+    "severity": "error",
+    "layer": "L1",
+    "priority": 5,
+    "is_overridable": false,
+    "name_ko": "모든 배관에 라인넘버 존재",
+    "name_en": "All process pipes must have line numbers",
+    "reference": "PIP PIC001",
+    "message_template": "배관 {edge_id}에 라인넘버가 없습니다.",
+    "condition_json": {
+      "match": "edge",
+      "where": {
+        "type": "process"
+      },
+      "check": {
+        "has_field": "line_number"
+      }
+    }
+  },
+  {
+    "code": "VAL-PIP-003",
+    "category": "piping",
+    "kind": "validate",
+    "scope": "PID",
+    "severity": "error",
+    "layer": "L1",
+    "priority": 5,
+    "is_overridable": false,
+    "name_ko": "배관 사이즈 명시",
+    "name_en": "Pipe size must be specified",
+    "reference": "PIP PIC001",
+    "message_template": "배관 {line_number}에 사이즈가 명시되지 않았습니다.",
+    "condition_json": {
+      "match": "edge",
+      "where": {
+        "type": "process"
+      },
+      "check": {
+        "has_property": {
+          "size": true
+        }
+      }
+    }
+  },
+  {
+    "code": "VAL-PIP-004",
+    "category": "piping",
+    "kind": "validate",
+    "scope": "PID",
+    "severity": "error",
+    "layer": "L1",
+    "priority": 5,
+    "is_overridable": false,
+    "name_ko": "배관 스펙(Pipe Class) 명시",
+    "name_en": "Pipe class must be specified",
+    "reference": "PIP PIC001",
+    "message_template": "배관 {line_number}에 파이프 클래스(스펙)가 명시되지 않았습니다.",
+    "condition_json": {
+      "match": "edge",
+      "where": {
+        "type": "process"
+      },
+      "check": {
+        "has_property": {
+          "spec": true
+        }
+      }
+    }
+  },
+  {
+    "code": "VAL-PIP-005",
+    "category": "piping",
+    "kind": "validate",
+    "scope": "PFD",
+    "severity": "info",
+    "layer": "L1",
+    "priority": 50,
+    "is_overridable": true,
+    "name_ko": "PFD에서는 라인넘버 생략 가능",
+    "name_en": "Line numbers are optional in PFD",
+    "reference": "ISO 10628-1",
+    "message_template": null,
+    "condition_json": {
+      "match": "edge",
+      "where": {
+        "diagram_type": "PFD"
+      },
+      "check": {
+        "line_number_optional": true
+      }
+    }
+  },
+  {
+    "code": "VAL-PIP-006",
+    "category": "piping",
+    "kind": "validate",
+    "scope": "PID",
+    "severity": "warning",
+    "layer": "L2",
+    "priority": 20,
+    "is_overridable": true,
+    "name_ko": "유틸리티 라인 구분 표기",
+    "name_en": "Utility lines must be visually distinct from process lines",
+    "reference": "PIP PIC001",
+    "message_template": "유틸리티 배관 {line_number}의 선종이 구분되지 않습니다.",
+    "condition_json": {
+      "match": "edge",
+      "where": {
+        "type": "utility"
+      },
+      "check": {
+        "edge_style_not": "process"
+      }
+    }
+  },
+  {
+    "code": "VAL-PIP-007",
+    "category": "piping",
+    "kind": "validate",
+    "scope": "PID",
+    "severity": "warning",
+    "layer": "L2",
+    "priority": 30,
+    "is_overridable": true,
+    "name_ko": "보온/보냉 타입 표기",
+    "name_en": "Insulation type must be specified for insulated lines",
+    "reference": "PIP PIC001",
+    "message_template": "배관 {line_number}의 보온/보냉 타입이 명시되지 않았습니다.",
+    "condition_json": {
+      "match": "edge",
+      "where": {
+        "properties": {
+          "insulation": {
+            "not_null": true
+          }
+        }
+      },
+      "check": {
+        "has_property": {
+          "insulation_type": true
+        }
+      }
+    }
+  },
+  {
+    "code": "VAL-PIP-008",
+    "category": "piping",
+    "kind": "validate",
+    "scope": "PID",
+    "severity": "warning",
+    "layer": "L2",
+    "priority": 30,
+    "is_overridable": true,
+    "name_ko": "배관 흐름 방향 화살표",
+    "name_en": "Flow direction arrows required on pipes",
+    "reference": "PIP PIC001",
+    "message_template": "배관 {line_number}에 흐름 방향 화살표가 없습니다.",
+    "condition_json": {
+      "match": "edge",
+      "where": {
+        "type": "process"
+      },
+      "check": {
+        "has_flow_arrow": true
+      }
+    }
+  },
+  {
+    "code": "VAL-PIP-009",
+    "category": "piping",
+    "kind": "validate",
+    "scope": "PID",
+    "severity": "warning",
+    "layer": "L2",
+    "priority": 20,
+    "is_overridable": true,
+    "name_ko": "데드엔드(막힌 라인) 경고",
+    "name_en": "Dead-end pipe warning",
+    "reference": "설계 관행",
+    "message_template": "노드 {tag}가 데드엔드 상태입니다 (입구만 있거나 출구만 있음).",
+    "condition_json": {
+      "match": "node",
+      "where": {
+        "type": [
+          "equipment",
+          "valve"
+        ]
+      },
+      "check": {
+        "not_dead_end": true
+      }
+    }
+  },
+  {
+    "code": "VAL-PIP-010",
+    "category": "piping",
+    "kind": "validate",
+    "scope": "PID",
+    "severity": "warning",
+    "layer": "L2",
+    "priority": 30,
+    "is_overridable": true,
+    "name_ko": "배관 연결 일관성 (사이즈 불일치)",
+    "name_en": "Pipe size consistency check",
+    "reference": "설계 관행",
+    "message_template": "{tag} 주변 배관 사이즈 불일치: {upstream_size} → {downstream_size}. 리듀서가 필요합니다.",
+    "condition_json": {
+      "match": "node",
+      "where": {
+        "type": [
+          "equipment",
+          "valve",
+          "fitting"
+        ]
+      },
+      "check": {
+        "connected_pipe_sizes_consistent_or_reducer": true
+      }
+    }
+  },
+  {
+    "code": "VAL-CMP-001",
+    "category": "completeness",
+    "kind": "validate",
+    "scope": "both",
+    "severity": "error",
+    "layer": "L1",
+    "priority": 5,
+    "is_overridable": false,
+    "name_ko": "모든 장비에 태그 번호 존재",
+    "name_en": "All equipment must have tag numbers",
+    "reference": "ISO 10628, PIP PIC001",
+    "message_template": "장비 {node_id}에 태그 번호가 없습니다.",
+    "condition_json": {
+      "match": "node",
+      "where": {
+        "type": "equipment"
+      },
+      "check": {
+        "has_field": "tag"
+      }
+    }
+  },
+  {
+    "code": "VAL-CMP-002",
+    "category": "completeness",
+    "kind": "validate",
+    "scope": "both",
+    "severity": "error",
+    "layer": "L1",
+    "priority": 5,
+    "is_overridable": false,
+    "name_ko": "모든 장비에 장비명 존재",
+    "name_en": "All equipment must have names",
+    "reference": "ISO 10628",
+    "message_template": "장비 {tag}에 장비명이 없습니다.",
+    "condition_json": {
+      "match": "node",
+      "where": {
+        "type": "equipment"
+      },
+      "check": {
+        "has_field": "name"
+      }
+    }
+  },
+  {
+    "code": "VAL-CMP-003",
+    "category": "completeness",
+    "kind": "validate",
+    "scope": "both",
+    "severity": "error",
+    "layer": "L1",
+    "priority": 5,
+    "is_overridable": false,
+    "name_ko": "장비 태그 중복 금지",
+    "name_en": "Equipment tags must be unique",
+    "reference": "PIP PIC001",
+    "message_template": "태그 {tag}가 도면 내에서 중복됩니다.",
+    "condition_json": {
+      "match": "diagram",
+      "check": {
+        "equipment_tags_unique": true
+      }
+    }
+  },
+  {
+    "code": "VAL-CMP-004",
+    "category": "completeness",
+    "kind": "validate",
+    "scope": "PID",
+    "severity": "error",
+    "layer": "L1",
+    "priority": 5,
+    "is_overridable": false,
+    "name_ko": "라인넘버 중복 금지 (동일 도면)",
+    "name_en": "Line numbers must be unique within the diagram",
+    "reference": "PIP PIC001",
+    "message_template": "라인넘버 {line_number}가 도면 내에서 중복됩니다.",
+    "condition_json": {
+      "match": "diagram",
+      "check": {
+        "line_numbers_unique": true
+      }
+    }
+  },
+  {
+    "code": "VAL-CMP-005",
+    "category": "completeness",
+    "kind": "validate",
+    "scope": "both",
+    "severity": "warning",
+    "layer": "L2",
+    "priority": 20,
+    "is_overridable": true,
+    "name_ko": "미연결 노드(고아) 경고",
+    "name_en": "Orphan node warning",
+    "reference": "설계 관행",
+    "message_template": "노드 {tag}가 어떤 배관에도 연결되지 않았습니다.",
+    "condition_json": {
+      "match": "node",
+      "check": {
+        "has_at_least_one_edge": true
+      }
+    }
+  },
+  {
+    "code": "VAL-CMP-006",
+    "category": "completeness",
+    "kind": "validate",
+    "scope": "both",
+    "severity": "warning",
+    "layer": "L2",
+    "priority": 30,
+    "is_overridable": true,
+    "name_ko": "배터리 리밋 경계 표시",
+    "name_en": "Battery limit markers required",
+    "reference": "PIP PIC001",
+    "message_template": "도면에 배터리 리밋 경계 표시가 없습니다.",
+    "condition_json": {
+      "match": "diagram",
+      "check": {
+        "has_battery_limit_markers": true
+      }
+    }
+  },
+  {
+    "code": "VAL-CMP-007",
+    "category": "completeness",
+    "kind": "validate",
+    "scope": "both",
+    "severity": "warning",
+    "layer": "L1",
+    "priority": 20,
+    "is_overridable": true,
+    "name_ko": "타이틀 블록 필수 항목",
+    "name_en": "Title block must contain required fields",
+    "reference": "ISO 10628",
+    "message_template": "타이틀 블록에 {missing_field}이 없습니다.",
+    "condition_json": {
+      "match": "diagram",
+      "check": {
+        "title_block_has": [
+          "name",
+          "number",
+          "revision",
+          "date"
+        ]
+      }
+    }
+  },
+  {
+    "code": "VAL-CMP-008",
+    "category": "completeness",
+    "kind": "validate",
+    "scope": "PID",
+    "severity": "info",
+    "layer": "L2",
+    "priority": 50,
+    "is_overridable": true,
+    "name_ko": "도면 내 범례(Legend) 존재",
+    "name_en": "Legend section required in P&ID",
+    "reference": "PIP PIC001",
+    "message_template": "P&ID 도면에 범례(Legend)가 없습니다.",
+    "condition_json": {
+      "match": "diagram",
+      "check": {
+        "has_legend": true
+      }
+    }
+  },
+  {
+    "code": "VAL-PFD-001",
+    "category": "layout",
+    "kind": "validate",
+    "scope": "PFD",
+    "severity": "warning",
+    "layer": "L1",
+    "priority": 10,
+    "is_overridable": false,
+    "name_ko": "PFD에 드레인/벤트 밸브 표시 금지",
+    "name_en": "Drain/vent valves must not appear in PFD",
+    "reference": "ISO 10628-1",
+    "message_template": "PFD에 드레인/벤트 밸브 {tag}가 표시되어 있습니다.",
+    "condition_json": {
+      "match": "node",
+      "where": {
+        "type": "valve",
+        "properties": {
+          "valve_function": [
+            "drain",
+            "vent"
+          ]
+        }
+      },
+      "check": {
+        "diagram_type_not": "PFD"
+      }
+    }
+  },
+  {
+    "code": "VAL-PFD-002",
+    "category": "layout",
+    "kind": "validate",
+    "scope": "PFD",
+    "severity": "warning",
+    "layer": "L1",
+    "priority": 10,
+    "is_overridable": false,
+    "name_ko": "PFD에 바이패스 라인 표시 금지",
+    "name_en": "Bypass lines must not appear in PFD",
+    "reference": "ISO 10628-1",
+    "message_template": "PFD에 바이패스 라인이 표시되어 있습니다.",
+    "condition_json": {
+      "match": "edge",
+      "where": {
+        "properties": {
+          "line_function": "bypass"
+        }
+      },
+      "check": {
+        "diagram_type_not": "PFD"
+      }
+    }
+  },
+  {
+    "code": "VAL-PFD-003",
+    "category": "piping",
+    "kind": "validate",
+    "scope": "PFD",
+    "severity": "error",
+    "layer": "L1",
+    "priority": 5,
+    "is_overridable": false,
+    "name_ko": "PFD 스트림에 온도/압력/유량 필수",
+    "name_en": "Temperature, pressure, flow rate required on PFD streams",
+    "reference": "ISO 10628-1",
+    "message_template": "PFD 스트림 {line_number}에 {missing_condition}이 명시되지 않았습니다.",
+    "condition_json": {
+      "match": "edge",
+      "where": {
+        "diagram_type": "PFD",
+        "type": "process"
+      },
+      "check": {
+        "has_properties": [
+          "temperature",
+          "pressure",
+          "flow_rate"
+        ]
+      }
+    }
+  },
+  {
+    "code": "VAL-PFD-004",
+    "category": "completeness",
+    "kind": "validate",
+    "scope": "PFD",
+    "severity": "warning",
+    "layer": "L1",
+    "priority": 20,
+    "is_overridable": true,
+    "name_ko": "PFD 스트림 넘버 순차",
+    "name_en": "PFD stream numbers should be sequential",
+    "reference": "ISO 10628-1",
+    "message_template": "PFD 스트림 번호가 순차적이지 않습니다.",
+    "condition_json": {
+      "match": "diagram",
+      "where": {
+        "diagram_type": "PFD"
+      },
+      "check": {
+        "stream_numbers_sequential": true
+      }
+    }
+  },
+  {
+    "code": "VAL-PFD-005",
+    "category": "completeness",
+    "kind": "validate",
+    "scope": "PFD",
+    "severity": "error",
+    "layer": "L1",
+    "priority": 5,
+    "is_overridable": false,
+    "name_ko": "H&MB 테이블 존재",
+    "name_en": "Heat & Material Balance table required in PFD",
+    "reference": "ISO 10628-1",
+    "message_template": "PFD에 H&MB 테이블이 없습니다.",
+    "condition_json": {
+      "match": "diagram",
+      "where": {
+        "diagram_type": "PFD"
+      },
+      "check": {
+        "has_hmb_table": true
+      }
+    }
+  },
+  {
+    "code": "VAL-PFD-006",
+    "category": "layout",
+    "kind": "validate",
+    "scope": "PFD",
+    "severity": "warning",
+    "layer": "L1",
+    "priority": 20,
+    "is_overridable": true,
+    "name_ko": "주요 제어밸브만 표시",
+    "name_en": "Only major control valves should appear in PFD",
+    "reference": "ISO 10628-1",
+    "message_template": "PFD에 세부 밸브 {tag}가 표시되어 있습니다.",
+    "condition_json": {
+      "match": "node",
+      "where": {
+        "type": "valve",
+        "properties": {
+          "importance": "minor"
+        }
+      },
+      "check": {
+        "diagram_type_not": "PFD"
+      }
+    }
+  },
+  {
+    "code": "VAL-PFD-007",
+    "category": "completeness",
+    "kind": "validate",
+    "scope": "PFD",
+    "severity": "warning",
+    "layer": "L2",
+    "priority": 30,
+    "is_overridable": true,
+    "name_ko": "주요 장비 설계조건 표기",
+    "name_en": "Design conditions required for major equipment in PFD",
+    "reference": "PIP PIE001",
+    "message_template": "{tag}에 설계온도 또는 설계압력이 표기되지 않았습니다.",
+    "condition_json": {
+      "match": "node",
+      "where": {
+        "type": "equipment",
+        "properties": {
+          "importance": "major"
+        }
+      },
+      "check": {
+        "has_properties": [
+          "design_temperature",
+          "design_pressure"
+        ]
+      }
+    }
+  },
+  {
+    "code": "VAL-TEST-001",
+    "category": "completeness",
+    "kind": "validate",
+    "scope": "both",
+    "severity": "error",
+    "layer": "L1",
+    "priority": 1,
+    "is_overridable": false,
+    "name_ko": "minimum_node_count",
+    "name_en": "minimum_node_count",
+    "description": "다이어그램은 최소 5개 이상의 노드를 가져야 합니다",
+    "message_template": "다이어그램은 최소 5개 이상의 노드를 가져야 합니다",
+    "condition_json": {
+      "match": "diagram",
+      "check": {
+        "node_count_min": 5
+      }
+    },
+    "enabled": false
+  }
+]

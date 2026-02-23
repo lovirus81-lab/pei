@@ -1,0 +1,14 @@
+[
+  {"code": "LKP-PIP-001", "class_letter": "A", "equipment_class": "Heat Transfer Equipment", "equipment_class_ko": "열교환 장비", "examples": "Shell & Tube HX, Plate HX, Air Cooler"},
+  {"code": "LKP-PIP-002", "class_letter": "B", "equipment_class": "Boilers & Fired Heaters", "equipment_class_ko": "보일러/가열로", "examples": "Process Heater, Waste Heat Boiler"},
+  {"code": "LKP-PIP-003", "class_letter": "C", "equipment_class": "Columns/Towers", "equipment_class_ko": "탑/칼럼", "examples": "Distillation, Absorber, Stripper"},
+  {"code": "LKP-PIP-004", "class_letter": "D", "equipment_class": "Dryers", "equipment_class_ko": "건조기", "examples": "Rotary, Spray, Fluid Bed"},
+  {"code": "LKP-PIP-005", "class_letter": "E", "equipment_class": "Electrical Equipment", "equipment_class_ko": "전기 장비", "examples": "Transformer, Motor, Switchgear"},
+  {"code": "LKP-PIP-006", "class_letter": "F", "equipment_class": "Solids Handling", "equipment_class_ko": "고체 처리", "examples": "Conveyor, Feeder, Crusher"},
+  {"code": "LKP-PIP-007", "class_letter": "G", "equipment_class": "Gas Handling", "equipment_class_ko": "가스 처리", "examples": "Compressor, Blower, Vacuum Pump"},
+  {"code": "LKP-PIP-008", "class_letter": "J", "equipment_class": "Liquid Handling", "equipment_class_ko": "액체 처리", "examples": "Centrifugal Pump, Metering Pump"},
+  {"code": "LKP-PIP-009", "class_letter": "L", "equipment_class": "Reactors", "equipment_class_ko": "반응기", "examples": "CSTR, Plug Flow, Batch"},
+  {"code": "LKP-PIP-010", "class_letter": "R", "equipment_class": "Pressure Vessels", "equipment_class_ko": "압력용기", "examples": "Drum, Separator, Accumulator"},
+  {"code": "LKP-PIP-011", "class_letter": "T", "equipment_class": "Tanks/Storage", "equipment_class_ko": "저장탱크", "examples": "Atmospheric, Cone Roof, Silo"},
+  {"code": "LKP-PIP-012", "class_letter": "V", "equipment_class": "Packaged Equipment", "equipment_class_ko": "패키지 장비", "examples": "Package Boiler, Chiller Unit"}
+]

@@ -1,0 +1,44 @@
+.PHONY: dev dev-front dev-back fmt lint test db-migrate db-seed db-reset up down
+
+# 개발
+dev:
+	@echo "Starting frontend and backend..."
+	$(MAKE) -j2 dev-front dev-back
+
+dev-front:
+	cd frontend && npm run dev
+
+dev-back:
+	cd backend && uvicorn app.main:app --reload --port 8000
+
+# 코드 품질
+fmt:
+	cd backend && ruff format .
+	cd frontend && npx prettier --write src/
+
+lint:
+	cd backend && ruff check .
+	cd frontend && npx eslint src/
+
+test:
+	cd backend && pytest -v
+	cd frontend && npx vitest run
+
+# DB
+db-migrate:
+	cd backend && alembic upgrade head
+
+db-seed:
+	cd backend && python -m app.services.seed_loader
+
+db-reset:
+	rm -f backend/data/pei.db
+	$(MAKE) db-migrate
+	$(MAKE) db-seed
+
+# Docker
+up:
+	cd ops && docker compose up -d
+
+down:
+	cd ops && docker compose down

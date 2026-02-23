@@ -1,0 +1,591 @@
+﻿python : Traceback (mos
+t recent call last):
+위치 줄:1 문자:1
++ python -m app.service
+s.seed_loader > seed_er
+ror.txt 2>&1; cat seed_
+er ...
++ ~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~
+    + CategoryInfo     
+         : NotSpecified
+:     (Traceback (most 
+rec    ent call last)::
+Stri    ng) [], RemoteE
+xcept    ion
+    + FullyQualifiedErr
+o    rId : NativeComman
+dE    rror
+ 
+  File "C:\Users\안주호\Ap
+pData\Local\Programs\Py
+thon\Python311\Lib\site
+-packages\sqlalchemy\en
+gine\base.py", line 212
+5, in _exec_insertmany_
+context
+    dialect.do_execute(
+  File "C:\Users\안주호\Ap
+pData\Local\Programs\Py
+thon\Python311\Lib\site
+-packages\sqlalchemy\en
+gine\default.py", line 
+952, in do_execute
+    cursor.execute(stat
+ement, parameters)
+  File "C:\Users\안주호\Ap
+pData\Local\Programs\Py
+thon\Python311\Lib\site
+-packages\sqlalchemy\di
+alects\sqlite\aiosqlite
+.py", line 182, in exec
+ute
+    self._adapt_connect
+ion._handle_exception(e
+rror)
+  File "C:\Users\안주호\Ap
+pData\Local\Programs\Py
+thon\Python311\Lib\site
+-packages\sqlalchemy\di
+alects\sqlite\aiosqlite
+.py", line 342, in _han
+dle_exception
+    raise error
+  File "C:\Users\안주호\Ap
+pData\Local\Programs\Py
+thon\Python311\Lib\site
+-packages\sqlalchemy\di
+alects\sqlite\aiosqlite
+.py", line 164, in exec
+ute
+    self.await_(_cursor
+.execute(operation, par
+ameters))
+  File "C:\Users\안주호\Ap
+pData\Local\Programs\Py
+thon\Python311\Lib\site
+-packages\sqlalchemy\ut
+il\_concurrency_py3k.py
+", line 132, in await_o
+nly
+    return current.pare
+nt.switch(awaitable)  #
+ type: ignore[no-any-re
+turn,attr-defined] # no
+qa: E501
+           ^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\안주호\Ap
+pData\Local\Programs\Py
+thon\Python311\Lib\site
+-packages\sqlalchemy\ut
+il\_concurrency_py3k.py
+", line 196, in greenle
+t_spawn
+    value = await resul
+t
+            ^^^^^^^^^^^
+^
+  File "C:\Users\안주호\Ap
+pData\Local\Programs\Py
+thon\Python311\Lib\site
+-packages\aiosqlite\cur
+sor.py", line 40, in ex
+ecute
+    await self._execute
+(self._cursor.execute, 
+sql, parameters)
+  File "C:\Users\안주호\Ap
+pData\Local\Programs\Py
+thon\Python311\Lib\site
+-packages\aiosqlite\cur
+sor.py", line 32, in _e
+xecute
+    return await self._
+conn._execute(fn, *args
+, **kwargs)
+           ^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^
+  File "C:\Users\안주호\Ap
+pData\Local\Programs\Py
+thon\Python311\Lib\site
+-packages\aiosqlite\cor
+e.py", line 160, in _ex
+ecute
+    return await future
+           ^^^^^^^^^^^^
+  File "C:\Users\안주호\Ap
+pData\Local\Programs\Py
+thon\Python311\Lib\site
+-packages\aiosqlite\cor
+e.py", line 63, in _con
+nection_worker_thread
+    result = function()
+             ^^^^^^^^^^
+sqlite3.IntegrityError:
+ UNIQUE constraint fail
+ed: rules.code
+
+The above exception was
+ the direct cause of th
+e following exception:
+
+Traceback (most recent 
+call last):
+  File "<frozen runpy>"
+, line 198, in _run_mod
+ule_as_main
+  File "<frozen runpy>"
+, line 88, in _run_code
+  File "C:\work\pei\bac
+kend\app\services\seed_
+loader.py", line 101, i
+n <module>
+    asyncio.run(load_se
+eds())
+  File "C:\Users\안주호\Ap
+pData\Local\Programs\Py
+thon\Python311\Lib\asyn
+cio\runners.py", line 1
+90, in run
+    return runner.run(m
+ain)
+           ^^^^^^^^^^^^
+^^^^
+  File "C:\Users\안주호\Ap
+pData\Local\Programs\Py
+thon\Python311\Lib\asyn
+cio\runners.py", line 1
+18, in run
+    return self._loop.r
+un_until_complete(task)
+           ^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\안주호\Ap
+pData\Local\Programs\Py
+thon\Python311\Lib\asyn
+cio\base_events.py", li
+ne 654, in run_until_co
+mplete
+    return future.resul
+t()
+           ^^^^^^^^^^^^
+^^^
+  File "C:\work\pei\bac
+kend\app\services\seed_
+loader.py", line 97, in
+ load_seeds
+    await db.commit()
+  File "C:\Users\안주호\Ap
+pData\Local\Programs\Py
+thon\Python311\Lib\site
+-packages\sqlalchemy\ex
+t\asyncio\session.py", 
+line 1000, in commit
+    await greenlet_spaw
+n(self.sync_session.com
+mit)
+  File "C:\Users\안주호\Ap
+pData\Local\Programs\Py
+thon\Python311\Lib\site
+-packages\sqlalchemy\ut
+il\_concurrency_py3k.py
+", line 203, in greenle
+t_spawn
+    result = context.sw
+itch(value)
+             ^^^^^^^^^^
+^^^^^^^^^^^
+  File "C:\Users\안주호\Ap
+pData\Local\Programs\Py
+thon\Python311\Lib\site
+-packages\sqlalchemy\or
+m\session.py", line 203
+0, in commit
+    trans.commit(_to_ro
+ot=True)
+  File "<string>", line
+ 2, in commit
+  File "C:\Users\안주호\Ap
+pData\Local\Programs\Py
+thon\Python311\Lib\site
+-packages\sqlalchemy\or
+m\state_changes.py", li
+ne 137, in _go
+    ret_value = fn(self
+, *arg, **kw)
+                ^^^^^^^
+^^^^^^^^^^^^^
+  File "C:\Users\안주호\Ap
+pData\Local\Programs\Py
+thon\Python311\Lib\site
+-packages\sqlalchemy\or
+m\session.py", line 131
+1, in commit
+    self._prepare_impl(
+)
+  File "<string>", line
+ 2, in _prepare_impl
+  File "C:\Users\안주호\Ap
+pData\Local\Programs\Py
+thon\Python311\Lib\site
+-packages\sqlalchemy\or
+m\state_changes.py", li
+ne 137, in _go
+    ret_value = fn(self
+, *arg, **kw)
+                ^^^^^^^
+^^^^^^^^^^^^^
+  File "C:\Users\안주호\Ap
+pData\Local\Programs\Py
+thon\Python311\Lib\site
+-packages\sqlalchemy\or
+m\session.py", line 128
+6, in _prepare_impl
+    self.session.flush(
+)
+  File "C:\Users\안주호\Ap
+pData\Local\Programs\Py
+thon\Python311\Lib\site
+-packages\sqlalchemy\or
+m\session.py", line 433
+1, in flush
+    self._flush(objects
+)
+  File "C:\Users\안주호\Ap
+pData\Local\Programs\Py
+thon\Python311\Lib\site
+-packages\sqlalchemy\or
+m\session.py", line 446
+6, in _flush
+    with util.safe_rera
+ise():
+  File "C:\Users\안주호\Ap
+pData\Local\Programs\Py
+thon\Python311\Lib\site
+-packages\sqlalchemy\ut
+il\langhelpers.py", lin
+e 224, in __exit__
+    raise exc_value.wit
+h_traceback(exc_tb)
+  File "C:\Users\안주호\Ap
+pData\Local\Programs\Py
+thon\Python311\Lib\site
+-packages\sqlalchemy\or
+m\session.py", line 442
+7, in _flush
+    flush_context.execu
+te()
+  File "C:\Users\안주호\Ap
+pData\Local\Programs\Py
+thon\Python311\Lib\site
+-packages\sqlalchemy\or
+m\unitofwork.py", line 
+466, in execute
+    rec.execute(self)
+  File "C:\Users\안주호\Ap
+pData\Local\Programs\Py
+thon\Python311\Lib\site
+-packages\sqlalchemy\or
+m\unitofwork.py", line 
+642, in execute
+    util.preloaded.orm_
+persistence.save_obj(
+  File "C:\Users\안주호\Ap
+pData\Local\Programs\Py
+thon\Python311\Lib\site
+-packages\sqlalchemy\or
+m\persistence.py", line
+ 93, in save_obj
+    _emit_insert_statem
+ents(
+  File "C:\Users\안주호\Ap
+pData\Local\Programs\Py
+thon\Python311\Lib\site
+-packages\sqlalchemy\or
+m\persistence.py", line
+ 1143, in _emit_insert_
+statements
+    result = connection
+.execute(
+             ^^^^^^^^^^
+^^^^^^^^^
+  File "C:\Users\안주호\Ap
+pData\Local\Programs\Py
+thon\Python311\Lib\site
+-packages\sqlalchemy\en
+gine\base.py", line 141
+9, in execute
+    return meth(
+           ^^^^^
+  File "C:\Users\안주호\Ap
+pData\Local\Programs\Py
+thon\Python311\Lib\site
+-packages\sqlalchemy\sq
+l\elements.py", line 52
+7, in _execute_on_conne
+ction
+    return connection._
+execute_clauseelement(
+           ^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\안주호\Ap
+pData\Local\Programs\Py
+thon\Python311\Lib\site
+-packages\sqlalchemy\en
+gine\base.py", line 164
+1, in _execute_clauseel
+ement
+    ret = self._execute
+_context(
+          ^^^^^^^^^^^^^
+^^^^^^^^^
+  File "C:\Users\안주호\Ap
+pData\Local\Programs\Py
+thon\Python311\Lib\site
+-packages\sqlalchemy\en
+gine\base.py", line 184
+4, in _execute_context
+    return self._exec_i
+nsertmany_context(diale
+ct, context)
+           ^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^
+  File "C:\Users\안주호\Ap
+pData\Local\Programs\Py
+thon\Python311\Lib\site
+-packages\sqlalchemy\en
+gine\base.py", line 213
+3, in _exec_insertmany_
+context
+    self._handle_dbapi_
+exception(
+  File "C:\Users\안주호\Ap
+pData\Local\Programs\Py
+thon\Python311\Lib\site
+-packages\sqlalchemy\en
+gine\base.py", line 236
+3, in _handle_dbapi_exc
+eption
+    raise sqlalchemy_ex
+ception.with_traceback(
+exc_info[2]) from e
+  File "C:\Users\안주호\Ap
+pData\Local\Programs\Py
+thon\Python311\Lib\site
+-packages\sqlalchemy\en
+gine\base.py", line 212
+5, in _exec_insertmany_
+context
+    dialect.do_execute(
+  File "C:\Users\안주호\Ap
+pData\Local\Programs\Py
+thon\Python311\Lib\site
+-packages\sqlalchemy\en
+gine\default.py", line 
+952, in do_execute
+    cursor.execute(stat
+ement, parameters)
+  File "C:\Users\안주호\Ap
+pData\Local\Programs\Py
+thon\Python311\Lib\site
+-packages\sqlalchemy\di
+alects\sqlite\aiosqlite
+.py", line 182, in exec
+ute
+    self._adapt_connect
+ion._handle_exception(e
+rror)
+  File "C:\Users\안주호\Ap
+pData\Local\Programs\Py
+thon\Python311\Lib\site
+-packages\sqlalchemy\di
+alects\sqlite\aiosqlite
+.py", line 342, in _han
+dle_exception
+    raise error
+  File "C:\Users\안주호\Ap
+pData\Local\Programs\Py
+thon\Python311\Lib\site
+-packages\sqlalchemy\di
+alects\sqlite\aiosqlite
+.py", line 164, in exec
+ute
+    self.await_(_cursor
+.execute(operation, par
+ameters))
+  File "C:\Users\안주호\Ap
+pData\Local\Programs\Py
+thon\Python311\Lib\site
+-packages\sqlalchemy\ut
+il\_concurrency_py3k.py
+", line 132, in await_o
+nly
+    return current.pare
+nt.switch(awaitable)  #
+ type: ignore[no-any-re
+turn,attr-defined] # no
+qa: E501
+           ^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\안주호\Ap
+pData\Local\Programs\Py
+thon\Python311\Lib\site
+-packages\sqlalchemy\ut
+il\_concurrency_py3k.py
+", line 196, in greenle
+t_spawn
+    value = await resul
+t
+            ^^^^^^^^^^^
+^
+  File "C:\Users\안주호\Ap
+pData\Local\Programs\Py
+thon\Python311\Lib\site
+-packages\aiosqlite\cur
+sor.py", line 40, in ex
+ecute
+    await self._execute
+(self._cursor.execute, 
+sql, parameters)
+  File "C:\Users\안주호\Ap
+pData\Local\Programs\Py
+thon\Python311\Lib\site
+-packages\aiosqlite\cur
+sor.py", line 32, in _e
+xecute
+    return await self._
+conn._execute(fn, *args
+, **kwargs)
+           ^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^
+  File "C:\Users\안주호\Ap
+pData\Local\Programs\Py
+thon\Python311\Lib\site
+-packages\aiosqlite\cor
+e.py", line 160, in _ex
+ecute
+    return await future
+           ^^^^^^^^^^^^
+  File "C:\Users\안주호\Ap
+pData\Local\Programs\Py
+thon\Python311\Lib\site
+-packages\aiosqlite\cor
+e.py", line 63, in _con
+nection_worker_thread
+    result = function()
+             ^^^^^^^^^^
+sqlalchemy.exc.Integrit
+yError: (sqlite3.Integr
+ityError) UNIQUE constr
+aint failed: rules.code
+[SQL: INSERT INTO rules
+ (id, ruleset_id, code,
+ category, kind, scope,
+ severity, name_ko, nam
+e_en, description, cond
+ition_json, action_json
+, message_template, ref
+erence, layer, priority
+, is_overridable, enabl
+ed) VALUES (?, ?, ?, ?,
+ ?, ?, ?, ?, ?, ?, ?, ?
+, ? ... 6076 characters
+ truncated ... ?, ?, ?,
+ ?, ?, ?, ?, ?, ?, ?, ?
+, ?, ?, ?, ?), (?, ?, ?
+, ?, ?, ?, ?, ?, ?, ?, 
+?, ?, ?, ?, ?, ?, ?, ?)
+]
+[parameters: ('aeb572ed
+-f352-4c0e-926a-4de8424
+a20f2', 'bc66d2f8-0521-
+499a-b37a-ed1ce712090b'
+, 'LKP-ISA-001', 'gener
+al', 'reference', 'both
+', None, '', '', '', 'n
+ull', 'null', None, Non
+e, 'L3', 100, 1, 1, 'b7
+4c8816-4b25-435c-a32d-f
+41cc51fa0b7', 'bc66d2f8
+-0521-499a-b37a-ed1ce71
+2090b', 'LKP-ISA-002', 
+'general', 'reference',
+ 'both', None, '', '', 
+'', 'null', 'null', Non
+e, None, 'L3', 100, 1, 
+1, 'c5a759b1-4c89-4bcc-
+83be-8d98b8073df8', 'bc
+66d2f8-0521-499a-b37a-e
+d1ce712090b', 'LKP-ISA-
+003', 'general', 'refer
+ence', 'both', None, ''
+, '', '', 'null', 'null
+', None, None ... 1898 
+parameters truncated ..
+. 'generate', 'both', N
+one, '계기 태그 자동 넘버링', 'A
+uto-generate instrument
+ tag number', '', '{"tr
+igger": "node_placed", 
+"where": {"type": "inst
+rument", "tag": null}}'
+, '{"generate_tag": {"f
+ormat": "{isa_code}-{lo
+op_number}", "isa_code"
+: "$isa_letters_from_su
+btype", "loop_number": 
+"$next_loop_number_for_
+measured_variable"}}', 
+None, 'ISA-5.1', 'L3', 
+20, 1, 1, 'c3dfed6b-042
+6-4e54-8ea5-80179b8c352
+4', 'bc66d2f8-0521-499a
+-b37a-ed1ce712090b', 'G
+EN-SYM-001', 'symbol', 
+'generate', 'both', Non
+e, '심볼 자동 선택', 'Auto-se
+lect SVG symbol based o
+n node subtype', '', '{
+"trigger": "node_placed
+", "where": {"symbol": 
+null}}', '{"set_symbol"
+: {"source": "SYMBOL_MA
+P", "key": "$node.subty
+pe"}}', None, 'ISA-5.1,
+ ISO 10628', 'L3', 50, 
+1, 1, '5fe0e365-7df7-4b
+1b-a1a5-662cf73377a2', 
+'bc66d2f8-0521-499a-b37
+a-ed1ce712090b', 'GEN-L
+IN-001', 'symbol', 'gen
+erate', 'both', None, '
+선종 자동 스타일', 'Auto-apply
+ line style based on ed
+ge type', '', '{"trigge
+r": "edge_created"}', '
+{"set_style": {"process
+": {"stroke": "#000", "
+strokeWidth": 2, "strok
+eDasharray": null}, "ut
+ility": {"stroke": "#00
+0", "strokeWidth": 1.5,
+ "strokeDas ... (52 cha
+racters truncated) ... 
+00", "strokeWidth": 1, 
+"strokeDasharray": "2 2
+"}, "signal_pneumatic":
+ {"stroke": "#000", "st
+rokeWidth": 1, "strokeD
+asharray": "2 2", "mark
+er": "X"}}}', None, 'IS
+A-5.1, PIP PIC001', 'L3
+', 50, 1, 1)]
+(Background on this err
+or at: https://sqlalche
+.me/e/20/gkpj)
+Creating Ruleset pei-default v2...

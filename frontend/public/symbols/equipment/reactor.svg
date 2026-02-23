@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 60">
+  <g stroke="black" stroke-width="2" fill="none">
+    <path d="M 15 20 L 15 45" />
+    <path d="M 45 20 L 45 45" />
+    <path d="M 15 20 Q 30 5 45 20" />
+    <path d="M 15 45 Q 30 55 45 45" />
+    <!-- Agitator -->
+    <path d="M 30 13 L 30 40" stroke-width="1.5" />
+    <path d="M 20 35 L 40 35" stroke-width="1.5" />
+    <rect x="27" y="5" width="6" height="8" />
+  </g>
+</svg>

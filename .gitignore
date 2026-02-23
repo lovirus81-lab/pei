@@ -1,0 +1,22 @@
+# Node
+node_modules/
+dist/
+build/
+.env
+.DS_Store
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+env/
+.env.local
+backend_output.txt
+test_*.py
+verify_*.py
+debug_*.log
+
+# Misc
+.idea/
+.vscode/
