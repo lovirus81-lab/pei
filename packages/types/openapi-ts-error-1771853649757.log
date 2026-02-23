@@ -1,0 +1,5 @@
+Error opening file "C:\work\pei\apps\api\openapi.json" 
+ENOENT: no such file or directory, open 'C:\work\pei\apps\api\openapi.json'
+ResolverError: Error opening file "C:\work\pei\apps\api\openapi.json" 
+ENOENT: no such file or directory, open 'C:\work\pei\apps\api\openapi.json'
+    at Object.read (C:\work\pei\node_modules\.pnpm\@apidevtools+json-schema-ref-parser@11.7.2\node_modules\@apidevtools\json-schema-ref-parser\dist\lib\resolvers\file.js:61:19)

@@ -1,0 +1,56 @@
+﻿src/generated/services.gen.ts(11,96): error TS2344: Type 'unknown' does not satisfy the constraint 'TDataShape'.
+src/generated/services.gen.ts(12,22): error TS2339: Property 'client' does not exist on type 'Options<unknown, ThrowOnError>'.
+src/generated/services.gen.ts(21,112): error TS2344: Type 'unknown' does not satisfy the constraint 'TDataShape'.
+src/generated/services.gen.ts(22,22): error TS2339: Property 'client' does not exist on type 'Options<unknown, ThrowOnError>'.
+src/generated/services.gen.ts(31,98): error TS2344: Type 'CreateProjectProjectsPostData' does not satisfy the constraint 'TDataShape'.
+  Property 'url' is missing in type 'CreateProjectProjectsPostData' but required in type 'TDataShape'.
+src/generated/services.gen.ts(32,22): error TS2339: Property 'client' does not exist on type 'Options<CreateProjectProjectsPostData, ThrowOnError>'.
+src/generated/services.gen.ts(41,97): error TS2344: Type 'ReadProjectsProjectsGetData' does not satisfy the constraint 'TDataShape'.
+  Property 'url' is missing in type 'ReadProjectsProjectsGetData' but required in type 'TDataShape'.
+src/generated/services.gen.ts(42,22): error TS2339: Property 'client' does not exist on type 'Options<ReadProjectsProjectsGetData, ThrowOnError>'.
+src/generated/services.gen.ts(51,104): error TS2344: Type 'ReadProjectProjectsProjectIdGetData' does not satisfy the constraint 'TDataShape'.
+  Property 'url' is missing in type 'ReadProjectProjectsProjectIdGetData' but required in type 'TDataShape'.
+src/generated/services.gen.ts(52,22): error TS2339: Property 'client' does not exist on type 'Options<ReadProjectProjectsProjectIdGetData, ThrowOnError>'.
+src/generated/services.gen.ts(61,106): error TS2344: Type 'UpdateProjectProjectsProjectIdPutData' does not satisfy the constraint 'TDataShape'.
+  Property 'url' is missing in type 'UpdateProjectProjectsProjectIdPutData' but required in type 'TDataShape'.
+src/generated/services.gen.ts(62,22): error TS2339: Property 'client' does not exist on type 'Options<UpdateProjectProjectsProjectIdPutData, ThrowOnError>'.
+src/generated/services.gen.ts(71,109): error TS2344: Type 'DeleteProjectProjectsProjectIdDeleteData' does not satisfy the constraint 'TDataShape'.
+  Property 'url' is missing in type 'DeleteProjectProjectsProjectIdDeleteData' but required in type 'TDataShape'.
+src/generated/services.gen.ts(72,22): error TS2339: Property 'client' does not exist on type 'Options<DeleteProjectProjectsProjectIdDeleteData, ThrowOnError>'.
+src/generated/services.gen.ts(81,115): error TS2344: Type 'CreateDiagramProjectsProjectIdDiagramsPostData' does not satisfy the constraint 'TDataShape'.
+  Property 'url' is missing in type 'CreateDiagramProjectsProjectIdDiagramsPostData' but required in type 'TDataShape'.
+src/generated/services.gen.ts(82,22): error TS2339: Property 'client' does not exist on type 'Options<CreateDiagramProjectsProjectIdDiagramsPostData, ThrowOnError>'.
+src/generated/services.gen.ts(91,120): error TS2344: Type 'ReadProjectDiagramsProjectsProjectIdDiagramsGetData' does not satisfy the constraint 'TDataShape'.
+  Property 'url' is missing in type 'ReadProjectDiagramsProjectsProjectIdDiagramsGetData' but required in type 'TDataShape'.
+src/generated/services.gen.ts(92,22): error TS2339: Property 'client' does not exist on type 'Options<ReadProjectDiagramsProjectsProjectIdDiagramsGetData, ThrowOnError>'.
+src/generated/services.gen.ts(101,104): error TS2344: Type 'ReadDiagramDiagramsDiagramIdGetData' does not satisfy the constraint 'TDataShape'.
+  Property 'url' is missing in type 'ReadDiagramDiagramsDiagramIdGetData' but required in type 'TDataShape'.
+src/generated/services.gen.ts(102,22): error TS2339: Property 'client' does not exist on type 'Options<ReadDiagramDiagramsDiagramIdGetData, ThrowOnError>'.
+src/generated/services.gen.ts(111,106): error TS2344: Type 'UpdateDiagramDiagramsDiagramIdPutData' does not satisfy the constraint 'TDataShape'.
+  Property 'url' is missing in type 'UpdateDiagramDiagramsDiagramIdPutData' but required in type 'TDataShape'.
+src/generated/services.gen.ts(112,22): error TS2339: Property 'client' does not exist on type 'Options<UpdateDiagramDiagramsDiagramIdPutData, ThrowOnError>'.
+src/generated/services.gen.ts(121,112): error TS2344: Type 'ExportDiagramDiagramsDiagramIdExportGetData' does not satisfy the constraint 'TDataShape'.
+  Property 'url' is missing in type 'ExportDiagramDiagramsDiagramIdExportGetData' but required in type 'TDataShape'.
+src/generated/services.gen.ts(122,22): error TS2339: Property 'client' does not exist on type 'Options<ExportDiagramDiagramsDiagramIdExportGetData, ThrowOnError>'.
+src/generated/services.gen.ts(131,110): error TS2344: Type 'unknown' does not satisfy the constraint 'TDataShape'.
+src/generated/services.gen.ts(132,22): error TS2339: Property 'client' does not exist on type 'Options<unknown, ThrowOnError>'.
+src/generated/services.gen.ts(141,100): error TS2344: Type 'ValidateDiagramValidatePostData' does not satisfy the constraint 'TDataShape'.
+  Property 'url' is missing in type 'ValidateDiagramValidatePostData' but required in type 'TDataShape'.
+src/generated/services.gen.ts(142,22): error TS2339: Property 'client' does not exist on type 'Options<ValidateDiagramValidatePostData, ThrowOnError>'.
+src/generated/services.gen.ts(151,96): error TS2344: Type 'RepairDiagramRepairPostData' does not satisfy the constraint 'TDataShape'.
+  Property 'url' is missing in type 'RepairDiagramRepairPostData' but required in type 'TDataShape'.
+src/generated/services.gen.ts(152,22): error TS2339: Property 'client' does not exist on type 'Options<RepairDiagramRepairPostData, ThrowOnError>'.
+src/generated/services.gen.ts(161,113): error TS2344: Type 'GenerateLayoutEndpointGenerateLayoutPostData' does not satisfy the constraint 'TDataShape'.
+  Property 'url' is missing in type 'GenerateLayoutEndpointGenerateLayoutPostData' but required in type 'TDataShape'.
+src/generated/services.gen.ts(162,22): error TS2339: Property 'client' does not exist on type 'Options<GenerateLayoutEndpointGenerateLayoutPostData, ThrowOnError>'.
+src/generated/services.gen.ts(171,117): error TS2344: Type 'GenerateTemplateEndpointGenerateTemplatePostData' does not satisfy the constraint 'TDataShape'.
+  Property 'url' is missing in type 'GenerateTemplateEndpointGenerateTemplatePostData' but required in type 'TDataShape'.
+src/generated/services.gen.ts(172,22): error TS2339: Property 'client' does not exist on type 'Options<GenerateTemplateEndpointGenerateTemplatePostData, ThrowOnError>'.
+src/generated/services.gen.ts(181,109): error TS2344: Type 'AutoRepairEndpointGenerateRepairPostData' does not satisfy the constraint 'TDataShape'.
+  Property 'url' is missing in type 'AutoRepairEndpointGenerateRepairPostData' but required in type 'TDataShape'.
+src/generated/services.gen.ts(182,22): error TS2339: Property 'client' does not exist on type 'Options<AutoRepairEndpointGenerateRepairPostData, ThrowOnError>'.
+src/generated/services.gen.ts(191,109): error TS2344: Type 'AiAssistEndpointGenerateAiAssistPostData' does not satisfy the constraint 'TDataShape'.
+  Property 'url' is missing in type 'AiAssistEndpointGenerateAiAssistPostData' but required in type 'TDataShape'.
+src/generated/services.gen.ts(192,22): error TS2339: Property 'client' does not exist on type 'Options<AiAssistEndpointGenerateAiAssistPostData, ThrowOnError>'.
+src/generated/services.gen.ts(201,81): error TS2344: Type 'unknown' does not satisfy the constraint 'TDataShape'.
+src/generated/services.gen.ts(202,22): error TS2339: Property 'client' does not exist on type 'Options<unknown, ThrowOnError>'.

@@ -1,0 +1,7 @@
+🚫 invalid client - select a valid client value
+Error: 🚫 invalid client - select a valid client value
+    at C:\work\pei\node_modules\.pnpm\@hey-api+openapi-ts@0.53.12_typescript@5.9.3\node_modules\@hey-api\openapi-ts\dist\index.cjs:1327:7489
+    at Array.map (<anonymous>)
+    at Qm (C:\work\pei\node_modules\.pnpm\@hey-api+openapi-ts@0.53.12_typescript@5.9.3\node_modules\@hey-api\openapi-ts\dist\index.cjs:1327:7038)
+    at async Xm (C:\work\pei\node_modules\.pnpm\@hey-api+openapi-ts@0.53.12_typescript@5.9.3\node_modules\@hey-api\openapi-ts\dist\index.cjs:1327:8164)
+    at async start (C:\work\pei\node_modules\.pnpm\@hey-api+openapi-ts@0.53.12_typescript@5.9.3\node_modules\@hey-api\openapi-ts\bin\index.cjs:78:5)
