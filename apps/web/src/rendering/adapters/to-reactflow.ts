@@ -1,5 +1,5 @@
-// frontend/src/converters/to-reactflow.ts
-// Canonical JSON → ReactFlow 노드/엣지 변환 (DB 로드 후 렌더링 전 호출)
+// rendering/adapters/to-reactflow.ts — Canonical → ReactFlow 변환 (rendering 계층)
+// converters/to-reactflow.ts에서 이전. EDGE_STYLES를 edge-styles.ts에서 가져옴.
 
 import type { Node, Edge } from "reactflow";
 import { MarkerType } from "reactflow";
@@ -7,16 +7,8 @@ import type {
   DiagramCanonical,
   CanonicalNode,
   CanonicalEdge,
-  EdgeType,
-} from "../types/canonical";
-
-// 엣지 타입별 스타일 매핑
-const EDGE_STYLES: Record<EdgeType, React.CSSProperties & { strokeDasharray?: string }> = {
-  process: { stroke: "#000", strokeWidth: 2 },
-  utility: { stroke: "#000", strokeWidth: 1.5, strokeDasharray: "6 3" },
-  signal_electrical: { stroke: "#000", strokeWidth: 1, strokeDasharray: "2 2" },
-  signal_pneumatic: { stroke: "#000", strokeWidth: 1, strokeDasharray: "2 2" },
-};
+} from "../../domain/types/diagram";
+import { EDGE_STYLES } from "./edge-styles";
 
 const SUBTYPE_TO_SYMBOL: Record<string, string> = {
   vessel: "vessel_vertical",
@@ -28,7 +20,7 @@ function canonicalNodeToRF(node: CanonicalNode): Node {
 
   return {
     id: node.id,
-    type: "pid",                        // 수정됨: pidNode -> pid
+    type: "pid",
     position: node.position,
     data: {
       canonicalType: node.type,
@@ -38,7 +30,6 @@ function canonicalNodeToRF(node: CanonicalNode): Node {
       properties: node.properties,
       nozzles: node.nozzles,
 
-      // UI 렌더링을 위해 PidNode가 기대하는 도메인 데이터
       symbolId: symbolKey,
       equipmentClass: symbolKey,
       label: node.tag || node.subtype,
@@ -59,15 +50,15 @@ function canonicalEdgeToRF(edge: CanonicalEdge): Edge {
     targetHandle: edge.to_port ?? "left-target",
     type: "smoothstep",
 
-    // ⚠️ DO NOT REMOVE: label must be set from line_number for P&ID rendering
     label: edge.line_number && edge.line_number !== "" ? edge.line_number : undefined,
     labelStyle: { fontSize: 11, fill: "#444" },
     labelBgPadding: [4, 2] as [number, number],
     labelBgStyle: { fill: "#fff", fillOpacity: 0.85 },
 
-    style: edge.type === "signal_electrical" || edge.type === "signal_pneumatic"
-      ? { strokeDasharray: "5,5", stroke: "#888" }
-      : style,
+    style:
+      edge.type === "signal_electrical" || edge.type === "signal_pneumatic"
+        ? { strokeDasharray: "5,5", stroke: "#888" }
+        : style,
     markerEnd: { type: MarkerType.Arrow, width: 12, height: 12 },
     data: {
       edgeType: edge.type,
@@ -83,7 +74,6 @@ function canonicalEdgeToRF(edge: CanonicalEdge): Edge {
 
 /**
  * Canonical 도면 → ReactFlow 렌더링 데이터로 변환.
- * 도메인 데이터는 node.data / edge.data 안에 그대로 보존한다.
  */
 export function toReactFlow(canonical: DiagramCanonical): {
   nodes: Node[];

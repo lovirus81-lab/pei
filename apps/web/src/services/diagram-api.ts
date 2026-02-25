@@ -128,14 +128,6 @@ export const diagramApi = {
         return data as unknown as { diagram: DiagramCanonical };
     },
 
-    autoLayout: async (diagram: DiagramCanonical): Promise<{ diagram: DiagramCanonical }> => {
-        const { data, error } = await client.POST('/generate/layout', {
-            body: { diagram: diagram as any }
-        });
-        if (error) throw error;
-        return data as unknown as { diagram: DiagramCanonical };
-    },
-
     autoRepair: async (diagram: DiagramCanonical, violations: Violation[]): Promise<{ diagram: DiagramCanonical, repairs: any[], remaining_violations: Violation[] }> => {
         const { data, error } = await client.POST('/generate/repair', {
             body: { diagram: diagram as any, violations: violations as any }

@@ -1,3 +1,7 @@
+// stores/canvas-store.ts — ReactFlow 렌더링 상태 어댑터
+// 도메인 로직은 canvas-domain-store.ts로 이동.
+// 이 스토어는 ReactFlow Node[]/Edge[] 렌더링 상태만 관리한다.
+
 import { create } from 'zustand';
 import {
     type Connection,
@@ -13,8 +17,9 @@ import {
     applyEdgeChanges,
 } from 'reactflow';
 import { type DiagramCanonical, type CanonicalNode } from '../types/canonical';
-import { toReactFlow } from '../converters/to-reactflow';
-import { toCanonical as convertToCanonical } from '../converters/to-canonical';
+import { toReactFlow } from '../rendering/adapters/to-reactflow';
+import { toCanonical as convertToCanonical } from '../rendering/adapters/to-canonical';
+import { applyElkLayout } from '../layout/elk-layout-engine';
 
 interface CanvasState {
     nodes: Node[];
@@ -26,10 +31,13 @@ interface CanvasState {
 
     addNode: (node: CanonicalNode) => void;
     removeNode: (nodeId: string) => void;
-    updateNodeData: (id: string, data: any) => void;
+    updateNodeData: (id: string, data: Record<string, unknown>) => void;
     loadCanonical: (canonical: DiagramCanonical) => void;
     toCanonical: () => DiagramCanonical;
+    /** elkjs로 클라이언트사이드 레이아웃 적용 (백엔드 API 불사용) */
     applyAutoLayout: () => Promise<void>;
+    /** 캔버스 명시적 초기화 */
+    clearCanvas: () => void;
 }
 
 export const useCanvasStore = create<CanvasState>((set, get) => ({
@@ -62,13 +70,12 @@ export const useCanvasStore = create<CanvasState>((set, get) => ({
     addNode: (cNode: CanonicalNode) => {
         const newNode: Node = {
             id: cNode.id,
-            // Allow override of type, default 'pid' if unhandled
             type: cNode.type === 'equipment' || cNode.type === 'valve' || cNode.type === 'instrument' ? 'pid' : (cNode.type || 'pid'),
             position: cNode.position,
             data: {
                 label: cNode.tag || cNode.subtype,
                 subtype: cNode.subtype,
-                equipmentClass: (cNode as any).equipmentClass || cNode.subtype
+                equipmentClass: (cNode as Record<string, unknown>).equipmentClass || cNode.subtype
             },
         };
 
@@ -82,7 +89,7 @@ export const useCanvasStore = create<CanvasState>((set, get) => ({
         }));
     },
 
-    updateNodeData: (id: string, data: any) => {
+    updateNodeData: (id: string, data: Record<string, unknown>) => {
         set({
             nodes: get().nodes.map(node => {
                 if (node.id === id) {
@@ -104,8 +111,6 @@ export const useCanvasStore = create<CanvasState>((set, get) => ({
 
     toCanonical: (): DiagramCanonical => {
         const { nodes, edges } = get();
-
-        // delegate to unified converter logic which preserves description/insulation
         return convertToCanonical(nodes, edges, {
             id: "temp",
             name: "Current Diagram",
@@ -118,15 +123,16 @@ export const useCanvasStore = create<CanvasState>((set, get) => ({
         if (currentDiagram.nodes.length === 0) return;
 
         try {
-            // we dynamically import to prevent cyclic deps or use injected api since we own services/diagram-api.ts here:
-            const { diagramApi } = await import('../services/diagram-api');
-            const data = await diagramApi.autoLayout(currentDiagram);
-            if (data && data.diagram) {
-                get().loadCanonical(data.diagram);
-            }
+            // elkjs 클라이언트사이드 레이아웃 (백엔드 API 불사용)
+            const positioned = await applyElkLayout(currentDiagram);
+            get().loadCanonical(positioned);
         } catch (error) {
-            console.error("Auto Layout Failed", error);
+            console.error("ELK Auto Layout Failed", error);
             throw error;
         }
-    }
+    },
+
+    clearCanvas: () => {
+        set({ nodes: [], edges: [] });
+    },
 }));
