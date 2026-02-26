@@ -128,28 +128,27 @@ function AppContent() {
     projects,
     currentProject,
     currentDiagram,
-    fetchProjects,
     createProject,
     createDiagram,
     saveCurrentDiagram,
     isLoading
   } = useProjectStore();
 
-  const { toCanonical, loadCanonical } = useCanvasStore();
-  const { runValidation, isValidating, clearReport } = useValidationStore();
+  const { toCanonical } = useCanvasStore();
+  const { runValidation, isValidating } = useValidationStore();
   const { addToast } = useToast();
 
   useEffect(() => {
-    fetchProjects();
-  }, [fetchProjects]);
+    useProjectStore.getState().fetchProjects();
+  }, []);
 
   // Sync canvas store when current diagram changes
   useEffect(() => {
     if (currentDiagram) {
-      loadCanonical(currentDiagram.canonical_json as unknown as DiagramCanonical);
-      clearReport(); // Clear validation on diagram switch
+      useCanvasStore.getState().loadCanonical(currentDiagram.canonical_json as unknown as DiagramCanonical);
+      useValidationStore.getState().clearReport();
     }
-  }, [currentDiagram, loadCanonical, clearReport]);
+  }, [currentDiagram]);
 
   const handleCreateProject = async () => {
     const name = prompt("Enter project name:");

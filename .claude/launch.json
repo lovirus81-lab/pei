@@ -1,0 +1,17 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "api",
+      "runtimeExecutable": "cmd.exe",
+      "runtimeArgs": ["/c", "cd apps\\api && uvicorn app.main:app --reload --host 0.0.0.0 --port 8000"],
+      "port": 8000
+    },
+    {
+      "name": "web",
+      "runtimeExecutable": "cmd.exe",
+      "runtimeArgs": ["/c", "cd apps\\web && node node_modules\\vite\\bin\\vite.js --port 5300 --host --strictPort"],
+      "port": 5300
+    }
+  ]
+}

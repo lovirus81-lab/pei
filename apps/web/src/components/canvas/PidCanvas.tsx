@@ -4,7 +4,7 @@ import { useCanvasStore } from '../../stores/canvas-store';
 import "reactflow/dist/style.css";
 
 import PidNode from "./PidNode";
-import { generateTag } from "../../utils/tagGenerator";
+import { generateTag } from "../../domain/services/tag-service";
 
 const nodeTypes = {
     pid: PidNode
@@ -19,7 +19,7 @@ const defaultEdgeOptions = {
 };
 
 function Flow() {
-    const { nodes, edges, onNodesChange, onEdgesChange, onConnect, addNode, removeNode, applyAutoLayout } = useCanvasStore();
+    const { nodes, edges, onNodesChange, onEdgesChange, onConnect, addNode, removeNode, applyAutoLayout, toCanonical } = useCanvasStore();
     const { screenToFlowPosition, fitView } = useReactFlow();
     const [isLayingOut, setIsLayingOut] = React.useState(false);
     const prevNodeCount = useRef(0);
@@ -54,8 +54,8 @@ function Flow() {
                 y: event.clientY,
             });
 
-            // Map type 'equipment' -> node tag prefix 'P-', 'T-', 'V-', etc. and sequentially number
-            const newTag = generateTag(equipmentClass, nodes);
+            // 태그 생성: CanonicalNode[] 기반 (ReactFlow Node[] 아님)
+            const newTag = generateTag(equipmentClass, toCanonical().nodes);
 
             // Create node passing custom requirements
             addNode({
@@ -67,7 +67,7 @@ function Flow() {
                 equipmentClass: equipmentClass // Pass custom property
             } as any);
         },
-        [screenToFlowPosition, addNode, nodes]
+        [screenToFlowPosition, addNode, toCanonical]
     );
 
     const onNodesDelete = useCallback((deleted: any[]) => {

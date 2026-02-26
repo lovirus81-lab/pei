@@ -1,5 +1,6 @@
-// frontend/src/converters/to-canonical.ts
-// ReactFlow 상태 → Canonical JSON 변환 (저장/검증/내보내기 전 호출)
+// rendering/adapters/to-canonical.ts — ReactFlow → Canonical 변환 (rendering 계층)
+// converters/to-canonical.ts에서 이전.
+// 수정: description 폴백에서 equipmentClass(UI 필드) 제거.
 
 import type { Node, Edge } from "reactflow";
 import type {
@@ -8,16 +9,21 @@ import type {
   CanonicalEdge,
   NodeType,
   EdgeType,
-} from "../types/canonical";
+} from "../../domain/types/diagram";
 
 /**
  * ReactFlow 노드/엣지를 Canonical 도메인 스키마로 변환.
- * ReactFlow 전용 필드(selected, dragging, measured 등)는 제거한다.
+ * ReactFlow 전용 필드(selected, dragging, measured 등)는 제거.
  */
 export function toCanonical(
   rfNodes: Node[],
   rfEdges: Edge[],
-  meta: { id: string; name: string; project_id?: string; diagram_type?: "pfd" | "pid" | "bfd" }
+  meta: {
+    id: string;
+    name: string;
+    project_id?: string;
+    diagram_type?: "pfd" | "pid" | "bfd";
+  }
 ): DiagramCanonical {
   const nodes: CanonicalNode[] = rfNodes.map((n) => {
     const data = n.data ?? {};
@@ -27,7 +33,8 @@ export function toCanonical(
       subtype: data.subtype ?? "unknown",
       tag: data.label || data.tag || "",
       name: data.name,
-      description: data.description || data.equipmentClass || "Equipment",
+      // 수정: equipmentClass(UI 전용 필드)를 description 폴백으로 사용하지 않음
+      description: data.description ?? "",
       location: data.location || "field",
       position: { x: n.position.x, y: n.position.y },
       properties: data.properties ?? {},

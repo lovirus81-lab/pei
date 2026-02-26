@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useCanvasStore } from '../../stores/canvas-store';
 import { useToast } from '../ui/Toast';
 import { diagramApi } from '../../services/diagram-api';
-import { toReactFlow } from '../../converters/to-reactflow';
 
 const TEMPLATES = [
     { id: "simple_pump_loop", label: "Simple Pump Loop" },
@@ -28,11 +27,9 @@ export default function TemplateLoader() {
             const data = await diagramApi.generateTemplate(templateId);
             const canonical = data.diagram;
 
-            // convert CanonicalDiagram to ReactFlow Nodes and Edges
-            const { nodes, edges } = toReactFlow(canonical);
-
-            // Overwrite existing canvas completely
-            useCanvasStore.setState({ nodes, edges });
+            // 캔버스에 canonical 로드 후 elkjs 레이아웃 적용
+            useCanvasStore.getState().loadCanonical(canonical);
+            await useCanvasStore.getState().applyAutoLayout();
 
             const templateLabel = TEMPLATES.find(t => t.id === templateId)?.label || templateId;
             addToast(`${templateLabel} 템플릿이 로드되었습니다`, "success");
