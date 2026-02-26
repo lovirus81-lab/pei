@@ -56,20 +56,30 @@ export function buildElkGraph(diagram: DiagramCanonical): ElkGraphDef {
         ports,
       };
     }),
-    edges: diagram.edges.map((edge) => ({
-      id: edge.id,
-      sources: [
-        edge.from_port
-          ? edge.from_port
-          : `${edge.from_node}__right`,
-      ],
-      targets: [
-        edge.to_port
-          ? edge.to_port
-          : `${edge.to_node}__left`,
-      ],
-    })),
+    edges: diagram.edges.map((edge) => {
+      const src = _resolvePort(edge.from_node, edge.from_port, "right");
+      const tgt = _resolvePort(edge.to_node, edge.to_port, "left");
+      return { id: edge.id, sources: [src], targets: [tgt] };
+    }),
   };
+}
+
+/**
+ * ReactFlow 핸들 ID("right-source", "left-target" 등)를
+ * ELK 포트 ID("nodeId__right" 등)로 변환한다.
+ * 노즐 ID(UUID 등)는 그대로 반환한다.
+ */
+function _resolvePort(
+  nodeId: string,
+  portId: string | null | undefined,
+  defaultSide: "right" | "left"
+): string {
+  if (!portId) return `${nodeId}__${defaultSide}`;
+  // ReactFlow handle 패턴: "right-source", "left-target", "top-target", "bottom-source"
+  const m = portId.match(/^(right|left|top|bottom)-(source|target)$/);
+  if (m) return `${nodeId}__${m[1]}`;
+  // 그 외(canonical nozzle ID)는 그대로 사용
+  return portId;
 }
 
 /** 노즐이 없는 노드용 기본 4방향 포트 */
